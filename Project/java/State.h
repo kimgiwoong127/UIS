@@ -2,8 +2,7 @@
 using namespace std;
 //각 행동을 번호로 간단하게 판단함 더 좋은 방법 있으면 알려주세요
 class State {
-protected:
-	int hp;
+private:
 	int attack1;
 	int attack2;
 	int avoid;
@@ -11,54 +10,79 @@ protected:
 	int heal;
 	int state = 0;
 public:
-	void setAttack(int a, int b);
-	void setHp(int h);
-	void setAvoid(int av);
-	void setDefense(int d);
-	void setHeal(int he);//몹, 플레이어 각각 설정
+	int hp;//hp는 계속 유동적으로 바뀔거 같아서 일단 public에 뒀음
+	State() {};
+	State(int a, int b,int h,int av,int d,int he);//몹, 플레이어 각각 설정
 	void Idle();
-	void Attack();
+	int gAttack1();//추후 관계를 위해 get제작함
+	int gAttack2();
+	int gAvoid();
+	int gDefense();
+	int gHeal();
+	void Attack1();
+	void Attack2();
 	void Hp();
 	void Avoid();
 	void Defense();
 	void Heal();//행동
+	int myState();
 };
 
-void State::setAttack(int a, int b) {
+State::State(int a, int b,int h,int av,int d,int he){//순서대로 약공, 강공, 체력, 회피율, 방어, 회복
 	attack1 = a;
   	attack2 = b;
-}
-
-void State::setHp(int h) {
 	hp = h;
-}
-
-void State::setAvoid(int av) {
 	avoid = av;
-}
-
-void State::setDefense(int d) {
 	defense = d;
-}
-
-void State::setHeal(int he) {
 	heal = he;
 }
 
-void State::Attack() {
+void State::Idle(){
+	state=0;
+}
+
+int State::gAttack1() {
+	return attack1;
+}
+
+int State::gAttack2() {
+	return attack2;
+}
+
+int State::gAvoid() {
+	return avoid;
+}
+
+int State::gDefense() {
+	return defense;
+}
+
+int State::gHeal() {
+	return heal;
+}
+
+void State::Attack1() {
 	state =1;
 }
 
-void State::Hp(){
+void State::Attack2() {
 	state =2;
 }
-void State::Avoid(){
+
+void State::Hp(){
 	state =3;
 }
-void State::Defense(){
+void State::Avoid(){
 	state =4;
 }
-void State::Heal(){
+void State::Defense(){
 	state =5;
 }
-//추후 각 관계는 몹에서 구현
+void State::Heal(){
+	state =6;
+}
+
+int State::myState(){
+	return state;
+}
+//추후 각 관계는 몹 또는 다른 헤더에서 구현
