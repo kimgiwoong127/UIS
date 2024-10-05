@@ -21,7 +21,7 @@ Player::Player() {
 
 void Player::actchoose() {
 	string pl;
-	cout << "a1 : ¾à°ø, a2 : °­°ø, av : È¸ÇÇ, d : ¹æ¾î, h : Èú" << endl;
+	cout << "a1 : ì•½ê³µ, a2 : ê°•ê³µ, av : íšŒí”¼, d : ë°©ì–´, h : íž" << endl;
 	cin >>pl;
 	if (pl == "a1")
 	{
@@ -49,4 +49,3 @@ void Player::actchoose() {
 	}
 
 }
-
