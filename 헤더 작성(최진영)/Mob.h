@@ -8,7 +8,7 @@ public:
 	State mob;
 	Mob();
 	Mob(int at, int av, int def, int rec, int hp);
-	void actchoose();
+	void actchoose(State player);
 	
 };
 
@@ -23,20 +23,20 @@ Mob::Mob() {
 
 
 
-void Mob::actchoose() {
+void Mob::actchoose(State player) {
 	string pl;
 	cout << "a1 : 약공, a2 : 강공, av : 회피, d : 방어, h : 힐" << endl;
-	pl = mob.checkstate();
+	pl = mob.checkstate(player);
 	if (pl == "a1")
 	{
 		int dm = mob.Attack1();
-		State target = select(Player::player);
+		State target = select(player);
 		target.takedamage(dm);
 	}
 	else if (pl == "a2")
 	{
 		int dm = mob.Attack2();
-		State target = select(Player::player);
+		State target = select(player);
 		target.takedamage(dm);
 	}
 	else if (pl == "av")
