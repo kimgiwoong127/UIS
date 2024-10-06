@@ -21,14 +21,13 @@ public:
 	int gHeal();
 	void Attack1();
 	void Attack2();
-	void Hp();
 	void Avoid();
 	void Defense();
 	void Heal();//행동
 	int myState();
 };
 
-State::State(int a, int b,int h,int av,int d,int he){//순서대로 약공, 강공, 체력, 회피율, 방어, 회복
+State::State(int a, int b,int h,int av,int d,int he){//순서대로 강공, 약공, 체력, 회피율, 방어, 회복
 	attack1 = a;
   	attack2 = b;
 	hp = h;
@@ -69,20 +68,17 @@ void State::Attack2() {
 	state =2;
 }
 
-void State::Hp(){
+void State::Avoid(){
 	state =3;
 }
-void State::Avoid(){
+void State::Defense(){
 	state =4;
 }
-void State::Defense(){
-	state =5;
-}
 void State::Heal(){
-	state =6;
+	state =5;
 }
 
 int State::myState(){
 	return state;
 }
-//추후 각 관계는 몹 또는 다른 헤더에서 구현
+//추후 각 관계는 몹에서 구현
