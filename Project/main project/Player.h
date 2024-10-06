@@ -6,7 +6,7 @@ private:
 	State player;
 public:
 	Player(int a, int b, int h, int av, int d, int he);
-	void act1(State mob);
+	void act1();
 	void act2();
 };
 
@@ -14,18 +14,18 @@ Player::Player(int a, int b, int h, int av, int d, int he) {
 	player = State(a, b, h, av, d, he);
 }
 
-void Player::act1(State mob) {
+void Player::act1() {
 	int pl;
 	cin >> pl;
-	switch (pl){
-		case 1:
-			mob.hp-player.gAttack1();
-			break;
-		case 2:
-			mob.hp-player.gAttack2();
-			break;
-		default:
-			break;
+	switch (pl) {
+	case 1:
+		player.Attack1();
+		break;
+	case 2:
+		player.Attack2();
+		break;
+	default:
+		break;
 	}
 }
 
