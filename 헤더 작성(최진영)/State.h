@@ -12,28 +12,28 @@ private:
 	string defense="d";
 	string heal="h";
 	string nothing = "n";
-	string state = nothing;  //¼­·Î ¸í·É ¿À°¡´Â Ã¼°è
+	string state = nothing;  //ì„œë¡œ ëª…ë ¹ ì˜¤ê°€ëŠ” ì²´ê³„
 public:
-	int Shp;//Ä³¸¯ÅÍÀÇ ½ºÅÈµé
+	int Shp;//ìºë¦­í„°ì˜ ìŠ¤íƒ¯ë“¤
 	int Sav;
 	int Sat;
 	int Sdef;
 	int Srec;
 	State() {};
-	State(int at, int av, int def, int rec, int hp);//¸÷, ÇÃ·¹ÀÌ¾îÀÇ ½ºÅÈ ¼³Á¤
+	State(int at, int av, int def, int rec, int hp);//ëª¹, í”Œë ˆì´ì–´ì˜ ìŠ¤íƒ¯ ì„¤ì •
 	int Idle();
 	int Attack1();
 	int Attack2();
 	void takedamage(int deal);
 	void Avoid();
 	void Defense();
-	void Heal();//Çàµ¿
+	void Heal();//í–‰ë™
 	string myState();
 	State select(State target);
 	string checkstate(State target);
 };
 
-State::State(int at, int av, int def, int rec, int hp) {//¼ø¼­´ë·Î °ø°İ·Â, È¸ÇÇÀ², ¹æ¾î·Â, È¸º¹·®, Ã¼·Â
+State::State(int at, int av, int def, int rec, int hp) {//ìˆœì„œëŒ€ë¡œ ê³µê²©ë ¥, íšŒí”¼ìœ¨, ë°©ì–´ë ¥, íšŒë³µëŸ‰, ì²´ë ¥
 	Sat = at;
 	Sav = av;
 	Sdef = def;
@@ -41,7 +41,7 @@ State::State(int at, int av, int def, int rec, int hp) {//¼ø¼­´ë·Î °ø°İ·Â, È¸ÇÇÀ
 	Shp = hp;
 }
 
-string State::checkstate(State target) { //ÀÏ´Ü ¸÷¸¸ ÇÃ·¹ÀÌ¾î Çàµ¿ µû¿Àµµ·Ï ÀÛ¼º Áß
+string State::checkstate(State target) { //ì¼ë‹¨ ëª¹ë§Œ í”Œë ˆì´ì–´ í–‰ë™ ë”°ì˜¤ë„ë¡ ì‘ì„± ì¤‘
 	if (target.myState() == "a1")
 	{
 		return "av";
