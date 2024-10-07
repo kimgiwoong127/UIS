@@ -11,6 +11,7 @@ private:
 	int state = 0;
 public:
 	int hp;//hp는 계속 유동적으로 바뀔거 같아서 일단 public에 뒀음
+	int maxhp;
 	State() {};
 	State(int a, int b,int h,int av,int d,int he);//몹, 플레이어 각각 설정
 	void Idle();
@@ -34,6 +35,7 @@ State::State(int a, int b,int h,int av,int d,int he){//순서대로 강공, 약�
 	avoid = av;
 	defense = d;
 	heal = he;
+	maxhp = hp;
 }
 
 void State::Idle(){
