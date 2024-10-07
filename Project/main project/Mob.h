@@ -10,6 +10,13 @@ private:
 	int attack1L[3] = { 1,1,1 };
 	int attack2W[3] = { 1,1,1 };
 	int attack2L[3] = { 1,1,1 };
+
+	int DefW[2] = { 1,1 };
+	int DefL[2] = { 1,1 };
+	int AvoW[2] = { 1,1 };
+	int AvoL[2] = { 1,1 };
+	int HealW[2] = { 1,1 };
+	int HealL[2] = { 1,1 };
 public:
 	State mob;
 	Mob() {};
@@ -99,12 +106,24 @@ void Mob::turn1(State player) {
 
 		break;
 	case 5:
-		if (choose < Bayes[2]) {//회복
+		if (choose <= Bayes[2]) {//회복
 			player.hp - mob.gAttack1();
+			if (player.hp + player.gHeal() < player.maxhp) {
+				player.hp += player.gHeal();
+			}
+			else {
+				player.hp = player.maxhp;
+			}
 			a = true;
 		}
 		else {
 			player.hp - mob.gAttack2();
+			if (player.hp + player.gHeal() < player.maxhp) {
+				player.hp += player.gHeal();
+			}
+			else {
+				player.hp = player.maxhp;
+			}
 		}
 
 		if (exhp - player.hp >= 10) {
@@ -121,6 +140,121 @@ void Mob::turn1(State player) {
 			}
 			else {
 				attack2W[2]++;
+			}
+		}
+		break;
+	default:
+		break;
+	}
+}
+
+void Mob::turn2(State player) {
+	int exhp = mob.hp;
+	srand((unsigned)time(0));
+	int choose = rand() % 100;
+	int Bayes1[2] = {};
+	int Bayes2[2] = {};
+	bool a = false;
+	bool b = false;
+	//1은 방어 성공률 2는 회피 성공률 식은 기존과 동일
+	for (int i = 0; i < 3; i++) {
+		Bayes1[i] = (((DefW[i] / (DefW[i] + DefL[i])) * (DefW[i] / (DefW[i] + AvoW[i]+HealW[i])))
+			/ ((DefW[i] + AvoW[i]+HealW[i]) / (DefW[i] + AvoW[i] + HealW[i] + DefL[i] + AvoL[i]+HealL[i]))) * 100;
+		Bayes2[i] = (((AvoW[i] / (AvoW[i] + AvoL[i])) * (AvoW[i] / (DefW[i] + AvoW[i] + HealW[i])))
+			/ ((DefW[i] + AvoW[i] + HealW[i]) / (DefW[i] + AvoW[i] + HealW[i] + DefL[i] + AvoL[i] + HealL[i]))) * 100;
+	}
+
+	switch (player.myState()) {
+	case 1:
+		if (choose <= Bayes1[0]) {
+			if (mob.gDefense() < player.gAttack1()) {
+				mob.hp -= player.gAttack1() - mob.gDefense();
+			}
+			a = true;
+		}
+		else if (choose <= Bayes1[0] + Bayes2[0]) {
+			if ((rand() % 100) >= mob.gAvoid()) {
+				mob.hp - player.gAttack1();
+			}
+			b = true;
+		}
+		else {
+			mob.hp - player.gAttack1();
+			if (mob.hp + mob.gHeal() < mob.maxhp) {
+				mob.hp += mob.gHeal();
+			}
+			else {
+				mob.hp = mob.maxhp;
+			}
+		}
+
+		if (exhp - mob.hp >= 10) {
+			if (a) {
+				DefW[0]++;
+			}
+			else if(b) {
+				AvoW[0]++;
+			}
+			else {
+				HealW[0]++;
+			}
+		}
+		else {
+			if (a) {
+				DefL[0]++;
+			}
+			else if (b) {
+				AvoL[0]++;
+			}
+			else {
+				HealL[0]++;
+			}
+		}
+
+		break;
+	case 2:
+		if (choose <= Bayes1[0]) {
+			if (mob.gDefense() < player.gAttack2()) {
+				mob.hp -= player.gAttack2() - mob.gDefense();
+			}
+			a = true;
+		}
+		else if (choose <= Bayes1[0] + Bayes2[0]) {
+			if ((rand() % 100) >= mob.gAvoid()) {
+				mob.hp - player.gAttack2();
+			}
+			b = true;
+		}
+		else {
+			mob.hp - player.gAttack2();
+			if (mob.hp + mob.gHeal() < mob.maxhp) {
+				mob.hp += mob.gHeal();
+			}
+			else {
+				mob.hp = mob.maxhp;
+			}
+		}
+
+		if (exhp - mob.hp >= 10) {
+			if (a) {
+				DefW[1]++;
+			}
+			else if (b) {
+				AvoW[1]++;
+			}
+			else {
+				HealW[1]++;
+			}
+		}
+		else {
+			if (a) {
+				DefL[1]++;
+			}
+			else if (b) {
+				AvoL[1]++;
+			}
+			else {
+				HealL[1]++;
 			}
 		}
 
