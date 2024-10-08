@@ -22,7 +22,7 @@ public:
 	Mob() {};
 	Mob(int a, int b, int h, int av, int d, int he);
 	void turn1(State player);
-	//void turn2(State player);방어턴은 나중에
+	void turn2(State player);
 };
 
 Mob::Mob(int a, int b, int h, int av, int d, int he) {
@@ -172,7 +172,7 @@ void Mob::turn2(State player) {
 			}
 			a = true;
 		}
-		else if (choose <= Bayes1[0] + Bayes2[0]) {
+		else if (choose <= Bayes1[0] + Bayes2[0]&&choose>Bayes1[0]) {
 			if ((rand() % 100) >= mob.gAvoid()) {
 				mob.hp - player.gAttack1();
 			}
@@ -213,13 +213,13 @@ void Mob::turn2(State player) {
 
 		break;
 	case 2:
-		if (choose <= Bayes1[0]) {
+		if (choose <= Bayes1[1]) {
 			if (mob.gDefense() < player.gAttack2()) {
 				mob.hp -= player.gAttack2() - mob.gDefense();
 			}
 			a = true;
 		}
-		else if (choose <= Bayes1[0] + Bayes2[0]) {
+		else if (choose <= Bayes1[1] + Bayes2[1]&&choose>Bayes1[1]) {
 			if ((rand() % 100) >= mob.gAvoid()) {
 				mob.hp - player.gAttack2();
 			}
