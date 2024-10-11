@@ -46,23 +46,23 @@ void Mob::turn1(State player) {
 
 	switch (player.myState()) {
 	case 3:
-		if (choose < Bayesforturn1[ego]) {//¹æ¾î
+		if (choose < Bayesforturn1[ego]) {//ë°©ì–´
 			if (player.gDefense() < mob.gAttack1()) {
 				player.hp -= mob.gAttack1() - player.gDefense();
-				cout << "ÀûÀÌ °ø°İÀ» ÇÏ¿© " << mob.gAttack1() - player.gDefense() << "¸¸Å­ÀÇ ÇÇÇØ¸¦ ÀÔ¾ú½À´Ï´Ù." << endl;
+				cout << "ì ì´ ê³µê²©ì„ í•˜ì—¬ " << mob.gAttack1() - player.gDefense() << "ë§Œí¼ì˜ í”¼í•´ë¥¼ ì…ì—ˆìŠµë‹ˆë‹¤." << endl;
 			}
 			else {
-				cout << "ÀûÀÌ °ø°İÀ» ÇßÁö¸¸ ¹æ¾î·Î ÀÎÇØ ÇÇÇØ¸¦ ÀÔÁö ¾Ê¾Ò½À´Ï´Ù." << endl;
+				cout << "ì ì´ ê³µê²©ì„ í–ˆì§€ë§Œ ë°©ì–´ë¡œ ì¸í•´ í”¼í•´ë¥¼ ì…ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤." << endl;
 			}
 			a = true;
 		}
 		else {
 			if (player.gDefense() < mob.gAttack2()) {
 				player.hp -= mob.gAttack2() - player.gDefense();
-				cout << "ÀûÀÌ °ø°İÀ» ÇÏ¿© " << mob.gAttack2() - player.gDefense() << "¸¸Å­ÀÇ ÇÇÇØ¸¦ ÀÔ¾ú½À´Ï´Ù." << endl;
+				cout << "ì ì´ ê³µê²©ì„ í•˜ì—¬ " << mob.gAttack2() - player.gDefense() << "ë§Œí¼ì˜ í”¼í•´ë¥¼ ì…ì—ˆìŠµë‹ˆë‹¤." << endl;
 			}
 			else {
-				cout << "ÀûÀÌ °ø°İÀ» ÇßÁö¸¸ ¹æ¾î·Î ÀÎÇØ ÇÇÇØ¸¦ ÀÔÁö ¾Ê¾Ò½À´Ï´Ù." << endl;
+				cout << "ì ì´ ê³µê²©ì„ í–ˆì§€ë§Œ ë°©ì–´ë¡œ ì¸í•´ í”¼í•´ë¥¼ ì…ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤." << endl;
 			}
 		}
 
@@ -85,23 +85,23 @@ void Mob::turn1(State player) {
 		cout << Bayesforturn1[ego] << endl;
 		break;
 	case 4:
-		if (choose < Bayesforturn1[ego]) {//È¸ÇÇ
+		if (choose < Bayesforturn1[ego]) {//íšŒí”¼
 			if ((rand() % 100) >= player.gAvoid()) {
 				player.hp -= mob.gAttack1();
-				cout << "È¸ÇÇ¿¡ ½ÇÆĞÇß½À´Ï´Ù... " << mob.gAttack1() << "¸¸Å­ÀÇ ÇÇÇØ¸¦ ÀÔ¾ú½À´Ï´Ù." << endl;
+				cout << "íšŒí”¼ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤... " << mob.gAttack1() << "ë§Œí¼ì˜ í”¼í•´ë¥¼ ì…ì—ˆìŠµë‹ˆë‹¤." << endl;
 			}
 			else {
-				cout << "È¸ÇÇ¿¡ ¼º°øÇß½À´Ï´Ù! ÇÇÇØ¸¦ ÀÔÁö ¾Ê½À´Ï´Ù." << endl;
+				cout << "íšŒí”¼ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤! í”¼í•´ë¥¼ ì…ì§€ ì•ŠìŠµë‹ˆë‹¤." << endl;
 			}
 			a = true;
 		}
 		else {
 			if ((rand() % 100) >= player.gAvoid()) {
 				player.hp -= mob.gAttack2();
-				cout << "È¸ÇÇ¿¡ ½ÇÆĞÇß½À´Ï´Ù... " << mob.gAttack2() << "¸¸Å­ÀÇ ÇÇÇØ¸¦ ÀÔ¾ú½À´Ï´Ù." << endl;
+				cout << "íšŒí”¼ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤... " << mob.gAttack2() << "ë§Œí¼ì˜ í”¼í•´ë¥¼ ì…ì—ˆìŠµë‹ˆë‹¤." << endl;
 			}
 			else {
-				cout << "È¸ÇÇ¿¡ ¼º°øÇß½À´Ï´Ù! ÇÇÇØ¸¦ ÀÔÁö ¾Ê½À´Ï´Ù." << endl;
+				cout << "íšŒí”¼ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤! í”¼í•´ë¥¼ ì…ì§€ ì•ŠìŠµë‹ˆë‹¤." << endl;
 			}
 		}
 
@@ -124,30 +124,30 @@ void Mob::turn1(State player) {
 		cout << Bayesforturn1[ego] << endl;
 		break;
 	case 5:
-		if (choose <= Bayesforturn1[ego]) {//È¸º¹
+		if (choose <= Bayesforturn1[ego]) {//íšŒë³µ
 			if (player.hp + player.gHeal() < player.maxhp) {
 				player.hp += player.gHeal();
-				cout << "È¸º¹À» »ç¿ëÇÕ´Ï´Ù. ÇÃ·¹ÀÌ¾îÀÇ Ã¼·Â +" << player.gHeal() << endl;
+				cout << "íšŒë³µì„ ì‚¬ìš©í•©ë‹ˆë‹¤. í”Œë ˆì´ì–´ì˜ ì²´ë ¥ +" << player.gHeal() << endl;
 			}
 			else {
-				cout << "È¸º¹À» »ç¿ëÇÕ´Ï´Ù. ÇÃ·¹ÀÌ¾îÀÇ Ã¼·Â +" << player.maxhp - player.hp << endl;
+				cout << "íšŒë³µì„ ì‚¬ìš©í•©ë‹ˆë‹¤. í”Œë ˆì´ì–´ì˜ ì²´ë ¥ +" << player.maxhp - player.hp << endl;
 				player.hp = player.maxhp;
 			}
 			a = true;
 			player.hp -= mob.gAttack1();
-			cout << "ÀÌ¾î¼­ ÀûÀÌ °ø°İÇÕ´Ï´Ù. ÇÃ·¹ÀÌ¾îÀÇ Ã¼·Â -" << mob.gAttack1() << endl;
+			cout << "ì´ì–´ì„œ ì ì´ ê³µê²©í•©ë‹ˆë‹¤. í”Œë ˆì´ì–´ì˜ ì²´ë ¥ -" << mob.gAttack1() << endl;
 		}
 		else {
 			if (player.hp + player.gHeal() < player.maxhp) {
 				player.hp += player.gHeal();
-				cout << "È¸º¹À» »ç¿ëÇÕ´Ï´Ù. ÇÃ·¹ÀÌ¾îÀÇ Ã¼·Â +" << player.gHeal() << endl;
+				cout << "íšŒë³µì„ ì‚¬ìš©í•©ë‹ˆë‹¤. í”Œë ˆì´ì–´ì˜ ì²´ë ¥ +" << player.gHeal() << endl;
 			}
 			else {
-				cout << "È¸º¹À» »ç¿ëÇÕ´Ï´Ù. ÇÃ·¹ÀÌ¾îÀÇ Ã¼·Â +" << player.maxhp - player.hp << endl;
+				cout << "íšŒë³µì„ ì‚¬ìš©í•©ë‹ˆë‹¤. í”Œë ˆì´ì–´ì˜ ì²´ë ¥ +" << player.maxhp - player.hp << endl;
 				player.hp = player.maxhp;
 			}
 			player.hp -= mob.gAttack2();
-			cout << "ÀÌ¾î¼­ ÀûÀÌ °ø°İÇÕ´Ï´Ù. ÇÃ·¹ÀÌ¾îÀÇ Ã¼·Â -" << mob.gAttack2() << endl;
+			cout << "ì´ì–´ì„œ ì ì´ ê³µê²©í•©ë‹ˆë‹¤. í”Œë ˆì´ì–´ì˜ ì²´ë ¥ -" << mob.gAttack2() << endl;
 		}
 
 		if (exhp - player.hp >= 10) {
@@ -180,7 +180,7 @@ void Mob::turn2(State player) {
 	bool a = false;
 	bool b = false;
 	int ego = autoselect(player);
-	//1Àº ¹æ¾î ¼º°ø·ü 2´Â È¸ÇÇ ¼º°ø·ü ½ÄÀº ±âÁ¸°ú µ¿ÀÏ
+	//1ì€ ë°©ì–´ ì„±ê³µë¥  2ëŠ” íšŒí”¼ ì„±ê³µë¥  ì‹ì€ ê¸°ì¡´ê³¼ ë™ì¼
 	for (int i = 0; i < 3; i++) {
 		Bayesforturn2d[i] = (((DefW[i] / (DefW[i] + DefL[i])) * (DefW[i] / (DefW[i] + AvoW[i] + HealW[i])))
 			/ ((DefW[i] + AvoW[i] + HealW[i]) / (DefW[i] + AvoW[i] + HealW[i] + DefL[i] + AvoL[i] + HealL[i]))) * 100;
@@ -193,34 +193,34 @@ void Mob::turn2(State player) {
 		if (choose <= Bayesforturn2d[ego]) {
 			if (mob.gDefense() < player.gAttack1()) {
 				mob.hp -= player.gAttack1() - mob.gDefense();
-				cout << "ÀûÀÌ °ø°İÀ» ¹æ¾îÇÏ¿© ÇÇÇØ°¡ ÁÙ¾îµì´Ï´Ù. " << player.gAttack1() - mob.gDefense() << "¸¸Å­ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù." << endl;
+				cout << "ì ì´ ê³µê²©ì„ ë°©ì–´í•˜ì—¬ í”¼í•´ê°€ ì¤„ì–´ë“­ë‹ˆë‹¤. " << player.gAttack1() - mob.gDefense() << "ë§Œí¼ì˜ í”¼í•´ë¥¼ ì…í˜”ìŠµë‹ˆë‹¤." << endl;
 			}
 			else {
-				cout << "ÀûÀÌ °ø°İÀ» ¹æ¾îÇÏ¿© ÇÇÇØ¸¦ ÀÔÈ÷Áö ¸øÇß½À´Ï´Ù." << endl;
+				cout << "ì ì´ ê³µê²©ì„ ë°©ì–´í•˜ì—¬ í”¼í•´ë¥¼ ì…íˆì§€ ëª»í–ˆìŠµë‹ˆë‹¤." << endl;
 			}
 			a = true;
 		}
 		else if (choose <= Bayesforturn2d[ego] + Bayesforturn2av[ego] && choose > Bayesforturn2d[ego]) {
 			if ((rand() % 100) >= mob.gAvoid()) {
 				mob.hp -= player.gAttack1();
-				cout << "ÀûÀÌ È¸ÇÇ¿¡ ½ÇÆĞÇß½À´Ï´Ù! " << player.gAttack1() << "¸¸Å­ÀÇ ÇÇÇØ¸¦ Áİ´Ï´Ù." << endl;
+				cout << "ì ì´ íšŒí”¼ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤! " << player.gAttack1() << "ë§Œí¼ì˜ í”¼í•´ë¥¼ ì¤ë‹ˆë‹¤." << endl;
 			}
 			else {
-				cout << "ÀûÀÌ °ø°İÀ» È¸ÇÇÇÏ¿´½À´Ï´Ù." << endl;
+				cout << "ì ì´ ê³µê²©ì„ íšŒí”¼í•˜ì˜€ìŠµë‹ˆë‹¤." << endl;
 			}
 			b = true;
 		}
 		else {
 			if (mob.hp + mob.gHeal() < mob.maxhp) {
 				mob.hp += mob.gHeal();
-				cout << "ÀûÀÌ È¸º¹À» ÇÕ´Ï´Ù. ÀûÀÇ Ã¼·Â +" << mob.gHeal() << endl;
+				cout << "ì ì´ íšŒë³µì„ í•©ë‹ˆë‹¤. ì ì˜ ì²´ë ¥ +" << mob.gHeal() << endl;
 			}
 			else {
-				cout << "ÀûÀÌ È¸º¹À» ÇÕ´Ï´Ù. ÀûÀÇ Ã¼·Â +" << mob.maxhp - mob.hp << endl;
+				cout << "ì ì´ íšŒë³µì„ í•©ë‹ˆë‹¤. ì ì˜ ì²´ë ¥ +" << mob.maxhp - mob.hp << endl;
 				mob.hp = mob.maxhp;
 			}
 			mob.hp -= player.gAttack1();
-			cout << "±âÈ¸¸¦ ³õÄ¡Áö ¾Ê°í °ø°İÀ» ÇÕ´Ï´Ù. ÀûÀÇ Ã¼·Â -" << player.gAttack1() << endl;
+			cout << "ê¸°íšŒë¥¼ ë†“ì¹˜ì§€ ì•Šê³  ê³µê²©ì„ í•©ë‹ˆë‹¤. ì ì˜ ì²´ë ¥ -" << player.gAttack1() << endl;
 		}
 
 		if (exhp - mob.hp >= 10) {
@@ -251,19 +251,19 @@ void Mob::turn2(State player) {
 		if (choose <= Bayesforturn2d[ego]) {
 			if (mob.gDefense() < player.gAttack2()) {
 				mob.hp -= player.gAttack2() - mob.gDefense();
-				cout << "ÀûÀÌ °ø°İÀ» ¹æ¾îÇÏ¿© ÇÇÇØ°¡ ÁÙ¾îµì´Ï´Ù. " << player.gAttack2() - mob.gDefense() << "¸¸Å­ÀÇ ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù." << endl;
+				cout << "ì ì´ ê³µê²©ì„ ë°©ì–´í•˜ì—¬ í”¼í•´ê°€ ì¤„ì–´ë“­ë‹ˆë‹¤. " << player.gAttack2() - mob.gDefense() << "ë§Œí¼ì˜ í”¼í•´ë¥¼ ì…í˜”ìŠµë‹ˆë‹¤." << endl;
 			}
 			else {
-				cout << "ÀûÀÌ °ø°İÀ» ¹æ¾îÇÏ¿© ÇÇÇØ¸¦ ÀÔÈ÷Áö ¸øÇß½À´Ï´Ù." << endl;
+				cout << "ì ì´ ê³µê²©ì„ ë°©ì–´í•˜ì—¬ í”¼í•´ë¥¼ ì…íˆì§€ ëª»í–ˆìŠµë‹ˆë‹¤." << endl;
 			}
 			a = true;
 		}
 		else if (choose <= Bayesforturn2d[ego] + Bayesforturn2av[ego] && choose > Bayesforturn2d[ego]) {
 			if ((rand() % 100) >= mob.gAvoid()) {
-				cout << "ÀûÀÌ È¸ÇÇ¿¡ ½ÇÆĞÇß½À´Ï´Ù! " << player.gAttack2() << "¸¸Å­ÀÇ ÇÇÇØ¸¦ Áİ´Ï´Ù." << endl;
+				cout << "ì ì´ íšŒí”¼ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤! " << player.gAttack2() << "ë§Œí¼ì˜ í”¼í•´ë¥¼ ì¤ë‹ˆë‹¤." << endl;
 			}
 			else {
-				cout << "ÀûÀÌ °ø°İÀ» È¸ÇÇÇÏ¿´½À´Ï´Ù." << endl;
+				cout << "ì ì´ ê³µê²©ì„ íšŒí”¼í•˜ì˜€ìŠµë‹ˆë‹¤." << endl;
 			}
 			b = true;
 		}
@@ -271,14 +271,14 @@ void Mob::turn2(State player) {
 			mob.hp - player.gAttack2();
 			if (mob.hp + mob.gHeal() < mob.maxhp) {
 				mob.hp += mob.gHeal();
-				cout << "ÀûÀÌ È¸º¹À» ÇÕ´Ï´Ù. ÀûÀÇ Ã¼·Â +" << mob.gHeal() << endl;
+				cout << "ì ì´ íšŒë³µì„ í•©ë‹ˆë‹¤. ì ì˜ ì²´ë ¥ +" << mob.gHeal() << endl;
 			}
 			else {
-				cout << "ÀûÀÌ È¸º¹À» ÇÕ´Ï´Ù. ÀûÀÇ Ã¼·Â +" << mob.maxhp - mob.hp << endl;
+				cout << "ì ì´ íšŒë³µì„ í•©ë‹ˆë‹¤. ì ì˜ ì²´ë ¥ +" << mob.maxhp - mob.hp << endl;
 				mob.hp = mob.maxhp;
 			}
 			mob.hp -= player.gAttack2();
-			cout << "±âÈ¸¸¦ ³õÄ¡Áö ¾Ê°í °ø°İÀ» ÇÕ´Ï´Ù. ÀûÀÇ Ã¼·Â -" << player.gAttack2() << endl;
+			cout << "ê¸°íšŒë¥¼ ë†“ì¹˜ì§€ ì•Šê³  ê³µê²©ì„ í•©ë‹ˆë‹¤. ì ì˜ ì²´ë ¥ -" << player.gAttack2() << endl;
 		}
 
 		if (exhp - mob.hp >= 10) {
