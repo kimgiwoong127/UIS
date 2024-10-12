@@ -7,26 +7,26 @@
 
 class Mob : public State {
 private:
-    int attack1W[3] = { 1, 1, 1 };  // ¾à°ø°İ ¼º°ø
-    int attack1L[3] = { 1, 1, 1 };  // ¾à°ø°İ ½ÇÆĞ
-    int attack2W[3] = { 1, 1, 1 };  // °­°ø°İ ¼º°ø
-    int attack2L[3] = { 1, 1, 1 };  // °­°ø°İ ½ÇÆĞ
+    int attack1W[3] = { 1, 1, 1 };  // ì•½ê³µê²© ì„±ê³µ
+    int attack1L[3] = { 1, 1, 1 };  // ì•½ê³µê²© ì‹¤íŒ¨
+    int attack2W[3] = { 1, 1, 1 };  // ê°•ê³µê²© ì„±ê³µ
+    int attack2L[3] = { 1, 1, 1 };  // ê°•ê³µê²© ì‹¤íŒ¨
 
-    int DefW[2] = { 1, 1 };  // ¹æ¾î ¼º°ø
-    int DefL[2] = { 1, 1 };  // ¹æ¾î ½ÇÆĞ
-    int AvoW[2] = { 1, 1 };  // È¸ÇÇ ¼º°ø
-    int AvoL[2] = { 1, 1 };  // È¸ÇÇ ½ÇÆĞ
-    int HealW[2] = { 1, 1 }; // È¸º¹ ¼º°ø
-    int HealL[2] = { 1, 1 }; // È¸º¹ ½ÇÆĞ
+    int DefW[2] = { 1, 1 };  // ë°©ì–´ ì„±ê³µ
+    int DefL[2] = { 1, 1 };  // ë°©ì–´ ì‹¤íŒ¨
+    int AvoW[2] = { 1, 1 };  // íšŒí”¼ ì„±ê³µ
+    int AvoL[2] = { 1, 1 };  // íšŒí”¼ ì‹¤íŒ¨
+    int HealW[2] = { 1, 1 }; // íšŒë³µ ì„±ê³µ
+    int HealL[2] = { 1, 1 }; // íšŒë³µ ì‹¤íŒ¨
 
 public:
     Mob() {};
     Mob(int a, int b, int h, int av, int d, int he, int spd);
 
-    void turn1(State player);  // ¸ó½ºÅÍ °ø°İ ÅÏ
-    void turn2(State player);  // ¸ó½ºÅÍ ¹æ¾î ÅÏ
+    void turn1(State player);  // ëª¬ìŠ¤í„° ê³µê²© í„´
+    void turn2(State player);  // ëª¬ìŠ¤í„° ë°©ì–´ í„´
 
-    // ÇÃ·¹ÀÌ¾îÀÇ Çàµ¿ µ¥ÀÌÅÍ¸¦ ±â·ÏÇÏ´Â ÇÔ¼ö
+    // í”Œë ˆì´ì–´ì˜ í–‰ë™ ë°ì´í„°ë¥¼ ê¸°ë¡í•˜ëŠ” í•¨ìˆ˜
     void updatePlayerAction(int action);
 };
 
