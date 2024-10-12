@@ -11,23 +11,30 @@ private:
 	int avoid;
 	int defense;
 	int heal;
-	int state = 0;
+	int speed=0;
+	int state;
 public:
 	int hp;
 	int maxhp;
 	State() {};
-	State(int a, int b, int h, int av, int d, int he);
-	void Idle();
-	int gAttack1();
-	int gAttack2();
-	int gAvoid();
-	int gDefense();
-	int gHeal();
-	void Attack1();
+	State(int a, int b, int h, int av, int d, int he, int spd);
+	int gAttack1() const;
+	int gAttack2() const;
+	int gAvoid() const;
+	int gDefense() const;
+	int gHeal() const;
+	/*void Attack1();
 	void Attack2();
 	void Avoid();
 	void Defense();
-	void Heal();
-	int myState();
+	void Heal();*/
+	void setSpeed(int spd); // 속도 설정
+	int gSpeed() ;
+	void setState(int a) {
+		state = a;
+	}
+	int myState() const {
+		return this->state;
+	}
 };
 #endif
