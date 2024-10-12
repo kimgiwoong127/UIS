@@ -1,26 +1,28 @@
 #include "Mob.h"
 
-Mob::Mob(int a, int b, int h, int av, int d, int he) {
-	mob = State(a, b, h, av, d, he);
+Mob::Mob(int a, int b, int h, int av, int d, int he,int spd) {
+	mob = State(a, b, h, av, d, he,spd);
 }
 
-void Mob::turn1(State player) {
-	int exhp = player.hp;
-	srand((unsigned)time(0));
+void Mob::turn1(Player& player) {
+	player.act2();
+	srand(static_cast<unsigned int>(time(0)));
+	int exhp = player.gHP();
 	int choose = rand() % 100;
-	int Bayes[3] = {};
+	int Bayes[3] = {0,0,0};
 	bool a = false;
 
 	for (int i = 0; i < 3; i++) {
-		Bayes[i] = (((attack1W[i] / (attack1W[i] + attack1L[i])) * (attack1W[i] / (attack1W[i] + attack2W[i])))
-			/ ((attack1W[i] + attack2W[i]) / (attack1W[i] + attack2W[i] + attack1L[0] + attack2L[0]))) * 100;
+		Bayes[i] = ((((float)attack1W[i] / (attack1W[i] + attack1L[i])) * ((float)attack1W[i] / (attack1W[i] + attack2W[i])))
+			/ ((float)(attack1W[i] + attack2W[i]) / (attack1W[i] + attack2W[i] + attack1L[0] + attack2L[0]))) * 100;
+		cout << "확률 " << Bayes[i] << endl;
 	}
 
-	switch (player.myState()) {
+	switch (player.PlayerState()) {
 	case 3:
 		if (choose < Bayes[0]) {//방어
 			if (player.gDefense() < mob.gAttack1()) {
-				player.hp -= mob.gAttack1() - player.gDefense();
+				player.sHP(player.gHP()-(mob.gAttack1() - player.gDefense()));
 				cout << "적이 공격을 하여 " << mob.gAttack1() - player.gDefense() << "만큼의 피해를 입었습니다." << endl;
 			}
 			else {
@@ -30,7 +32,7 @@ void Mob::turn1(State player) {
 		}
 		else {
 			if (player.gDefense() < mob.gAttack2()) {
-				player.hp -= mob.gAttack2() - player.gDefense();
+				player.sHP(player.gHP() - (mob.gAttack2() - player.gDefense()));
 				cout << "적이 공격을 하여 " << mob.gAttack2() - player.gDefense() << "만큼의 피해를 입었습니다." << endl;
 			}
 			else {
@@ -38,7 +40,7 @@ void Mob::turn1(State player) {
 			}
 		}
 
-		if (exhp - player.hp >= 10) {
+		if (exhp - player.gHP() >= 10) {
 			if (a) {
 				attack1L[0]++;
 			}
@@ -54,12 +56,11 @@ void Mob::turn1(State player) {
 				attack2W[0]++;
 			}
 		}
-		cout << Bayes[0] << endl;
 		break;
 	case 4:
 		if (choose < Bayes[1]) {//회피
 			if ((rand() % 100) >= player.gAvoid()) {
-				player.hp -= mob.gAttack1();
+				player.sHP(player.gHP() - (mob.gAttack1()));
 				cout << "회피에 실패했습니다... " << mob.gAttack1() << "만큼의 피해를 입었습니다." << endl;
 			}
 			else {
@@ -69,7 +70,7 @@ void Mob::turn1(State player) {
 		}
 		else {
 			if ((rand() % 100) >= player.gAvoid()) {
-				player.hp -= mob.gAttack2();
+				player.sHP(player.gHP() - (mob.gAttack2()));
 				cout << "회피에 실패했습니다... " << mob.gAttack2() << "만큼의 피해를 입었습니다." << endl;
 			}
 			else {
@@ -77,7 +78,7 @@ void Mob::turn1(State player) {
 			}
 		}
 
-		if (exhp - player.hp >= 10) {
+		if (exhp - player.gHP() >= 10) {
 			if (a) {
 				attack1L[1]++;
 			}
@@ -93,36 +94,36 @@ void Mob::turn1(State player) {
 				attack2W[1]++;
 			}
 		}
-		cout << Bayes[1] << endl;
+
 		break;
 	case 5:
 		if (choose <= Bayes[2]) {//회복
-			if (player.hp + player.gHeal() < player.maxhp) {
-				player.hp += player.gHeal();
+			if (player.gHP() + player.gHeal() < player.max()) {
+				player.sHP(player.gHP() +player.gHeal());
 				cout << "회복을 사용합니다. 플레이어의 체력 +" << player.gHeal() << endl;
 			}
 			else {
-				cout << "회복을 사용합니다. 플레이어의 체력 +" << player.maxhp - player.hp << endl;
-				player.hp = player.maxhp;
+				cout << "회복을 사용합니다. 플레이어의 체력 +" << player.max() - player.gHP() << endl;
+				player.sHP(player.max());
 			}
 			a = true;
-			player.hp -= mob.gAttack1();
+			player.sHP(player.gHP() - (mob.gAttack1()));
 			cout << "이어서 적이 공격합니다. 플레이어의 체력 -" << mob.gAttack1() << endl;
 		}
 		else {
-			if (player.hp + player.gHeal() < player.maxhp) {
-				player.hp += player.gHeal();
+			if (player.gHP() + player.gHeal() < player.max()) {
+				player.sHP(player.gHP() + player.gHeal());
 				cout << "회복을 사용합니다. 플레이어의 체력 +" << player.gHeal() << endl;
 			}
 			else {
-				cout << "회복을 사용합니다. 플레이어의 체력 +" << player.maxhp - player.hp << endl;
-				player.hp = player.maxhp;
+				cout << "회복을 사용합니다. 플레이어의 체력 +" << player.max() - player.gHP() << endl;
+				player.sHP(player.max());
 			}
-			player.hp -= mob.gAttack2();
+			player.sHP(player.gHP() - (mob.gAttack2()));
 			cout << "이어서 적이 공격합니다. 플레이어의 체력 -" << mob.gAttack2() << endl;
 		}
 
-		if (exhp - player.hp >= 10) {
+		if (exhp - player.gHP() >= 10) {
 			if (a) {
 				attack1L[2]++;
 			}
@@ -138,34 +139,36 @@ void Mob::turn1(State player) {
 				attack2W[2]++;
 			}
 		}
-		cout << Bayes[2] << endl;
 		break;
 	default:
 		break;
 	}
 }
 
-void Mob::turn2(State player) {
-	int exhp = mob.hp;
-	srand((unsigned)time(0));
+void Mob::turn2(Player& player) {
+	player.act1();
+	int exhp = gHP();
+	srand(static_cast<unsigned int>(time(0)));
 	int choose = rand() % 100;
-	int Bayes1[2] = {};
-	int Bayes2[2] = {};
+	int Bayes1[2] = {0,0};
+	int Bayes2[2] = {0,0};
 	bool a = false;
 	bool b = false;
 	//1은 방어 성공률 2는 회피 성공률 식은 기존과 동일
-	for (int i = 0; i < 3; i++) {
-		Bayes1[i] = (((DefW[i] / (DefW[i] + DefL[i])) * (DefW[i] / (DefW[i] + AvoW[i] + HealW[i])))
-			/ ((DefW[i] + AvoW[i] + HealW[i]) / (DefW[i] + AvoW[i] + HealW[i] + DefL[i] + AvoL[i] + HealL[i]))) * 100;
-		Bayes2[i] = (((AvoW[i] / (AvoW[i] + AvoL[i])) * (AvoW[i] / (DefW[i] + AvoW[i] + HealW[i])))
-			/ ((DefW[i] + AvoW[i] + HealW[i]) / (DefW[i] + AvoW[i] + HealW[i] + DefL[i] + AvoL[i] + HealL[i]))) * 100;
+
+	for (int i = 0; i < 2; i++) {
+		Bayes1[i] = ((((float)DefW[i] / (DefW[i] + DefL[i])) * ((float)DefW[i] / (DefW[i] + AvoW[i] + HealW[i])))
+			/ ((float)(DefW[i] + AvoW[i] + HealW[i]) / (DefW[i] + AvoW[i] + HealW[i] + DefL[i] + AvoL[i] + HealL[i]))) * 100;
+		Bayes2[i] = ((((float)AvoW[i] / (AvoW[i] + AvoL[i])) * ((float)AvoW[i] / (DefW[i] + AvoW[i] + HealW[i])))
+			/ ((float)(DefW[i] + AvoW[i] + HealW[i]) / (DefW[i] + AvoW[i] + HealW[i] + DefL[i] + AvoL[i] + HealL[i]))) * 100;
+		cout << "확률 "<<Bayes1[i] << " " << Bayes2[i] << endl;
 	}
 
-	switch (player.myState()) {
+	switch (player.PlayerState()) {
 	case 1:
 		if (choose <= Bayes1[0]) {
-			if (mob.gDefense() < player.gAttack1()) {
-				mob.hp -= player.gAttack1() - mob.gDefense();
+			if (gDefense() < player.gAttack1()) {
+				sHP(gHP()-(player.gAttack1()- gDefense()));
 				cout << "적이 공격을 방어하여 피해가 줄어듭니다. " << player.gAttack1() - mob.gDefense() << "만큼의 피해를 입혔습니다." << endl;
 			}
 			else {
@@ -174,8 +177,8 @@ void Mob::turn2(State player) {
 			a = true;
 		}
 		else if (choose <= Bayes1[0] + Bayes2[0] && choose > Bayes1[0]) {
-			if ((rand() % 100) >= mob.gAvoid()) {
-				mob.hp -= player.gAttack1();
+			if ((rand() % 100) >= gAvoid()) {
+				sHP(gHP() - player.gAttack1());
 				cout << "적이 회피에 실패했습니다! " << player.gAttack1() << "만큼의 피해를 줍니다." << endl;
 			}
 			else {
@@ -184,15 +187,16 @@ void Mob::turn2(State player) {
 			b = true;
 		}
 		else {
-			if (mob.hp + mob.gHeal() < mob.maxhp) {
-				mob.hp += mob.gHeal();
-				cout << "적이 회복을 합니다. 적의 체력 +" << mob.gHeal() << endl;
+
+			if (gHP() + gHeal() < max()) {
+				sHP(gHP() + gHeal());
+				cout << "적이 회복을 합니다. 적의 체력 +" << gHeal() << endl;
 			}
 			else {
-				cout << "적이 회복을 합니다. 적의 체력 +" << mob.maxhp - mob.hp << endl;
-				mob.hp = mob.maxhp;
+				cout << "적이 회복을 합니다. 적의 체력 +" << max() - gHP() << endl;
+				sHP(max());
 			}
-			mob.hp -= player.gAttack1();
+			sHP(gHP() - player.gAttack1());
 			cout << "기회를 놓치지 않고 공격을 합니다. 적의 체력 -" << player.gAttack1() << endl;
 		}
 
@@ -218,12 +222,11 @@ void Mob::turn2(State player) {
 				HealL[0]++;
 			}
 		}
-		cout << Bayes1[0] << " " << Bayes2[0] << endl;
 		break;
 	case 2:
 		if (choose <= Bayes1[1]) {
-			if (mob.gDefense() < player.gAttack2()) {
-				mob.hp -= player.gAttack2() - mob.gDefense();
+			if (gDefense() < player.gAttack2()) {
+				sHP(gHP() - (player.gAttack2() - gDefense()));
 				cout << "적이 공격을 방어하여 피해가 줄어듭니다. " << player.gAttack2() - mob.gDefense() << "만큼의 피해를 입혔습니다." << endl;
 			}
 			else {
@@ -232,7 +235,8 @@ void Mob::turn2(State player) {
 			a = true;
 		}
 		else if (choose <= Bayes1[1] + Bayes2[1] && choose > Bayes1[1]) {
-			if ((rand() % 100) >= mob.gAvoid()) {
+			if ((rand() % 100) >= gAvoid()) {
+				sHP(gHP() - player.gAttack2());
 				cout << "적이 회피에 실패했습니다! " << player.gAttack2() << "만큼의 피해를 줍니다." << endl;
 			}
 			else {
@@ -241,16 +245,15 @@ void Mob::turn2(State player) {
 			b = true;
 		}
 		else {
-			mob.hp - player.gAttack2();
-			if (mob.hp + mob.gHeal() < mob.maxhp) {
-				mob.hp += mob.gHeal();
-				cout << "적이 회복을 합니다. 적의 체력 +" << mob.gHeal() << endl;
+			if ((gHP() + gHeal()) < max()) {
+				sHP(gHP() + gHeal());
+				cout << "적이 회복을 합니다. 적의 체력 +" << gHeal() << endl;
 			}
 			else {
-				cout << "적이 회복을 합니다. 적의 체력 +" << mob.maxhp - mob.hp << endl;
-				mob.hp = mob.maxhp;
+				cout << "적이 회복을 합니다. 적의 체력 +" << max() - gHP() << endl;
+				sHP(max());
 			}
-			mob.hp -= player.gAttack2();
+			sHP(gHP() - player.gAttack2());
 			cout << "기회를 놓치지 않고 공격을 합니다. 적의 체력 -" << player.gAttack2() << endl;
 		}
 
@@ -276,7 +279,6 @@ void Mob::turn2(State player) {
 				HealL[1]++;
 			}
 		}
-		cout << Bayes1[1] << " " << Bayes2[1] << endl;
 		break;
 	default:
 		break;
