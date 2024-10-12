@@ -4,37 +4,37 @@
 #include <iostream>
 using namespace std;
 
-// State Å¬·¡½º (±âº»ÀûÀ¸·Î ÇÃ·¹ÀÌ¾î¿Í ¸ó½ºÅÍ°¡ »ó¼Ó)
+// State í´ë˜ìŠ¤ (ê¸°ë³¸ì ìœ¼ë¡œ í”Œë ˆì´ì–´ì™€ ëª¬ìŠ¤í„°ê°€ ìƒì†)
 class State {
 private:
     int attack1;
     int attack2;
     int defense;
-    int avoid; // È¸ÇÇ È®·ü
+    int avoid; // íšŒí”¼ í™•ë¥ 
     int heal;
-    int state; // »óÅÂ ÀúÀå
-    int speed; // ¼Óµµ Ãß°¡
+    int state; // ìƒíƒœ ì €ì¥
+    int speed; // ì†ë„ ì¶”ê°€
 
 public:
-    int hp;    // ÇöÀç Ã¼·Â
-    int maxhp; // ÃÖ´ë Ã¼·Â
+    int hp;    // í˜„ì¬ ì²´ë ¥
+    int maxhp; // ìµœëŒ€ ì²´ë ¥
 
-    // ±âº» »ı¼ºÀÚ ¹× ¸Å°³º¯¼ö »ı¼ºÀÚ
-    State() : attack1(0), attack2(0), defense(0), avoid(0), heal(0), state(0), hp(0), maxhp(0), speed(0) {} // ±âº» »ı¼ºÀÚ¿¡¼­ ¸â¹ö º¯¼ö ÃÊ±âÈ­
+    // ê¸°ë³¸ ìƒì„±ì ë° ë§¤ê°œë³€ìˆ˜ ìƒì„±ì
+    State() : attack1(0), attack2(0), defense(0), avoid(0), heal(0), state(0), hp(0), maxhp(0), speed(0) {} // ê¸°ë³¸ ìƒì„±ìì—ì„œ ë©¤ë²„ ë³€ìˆ˜ ì´ˆê¸°í™”
     State(int a1, int a2, int h, int d, int av, int he, int spd);
 
-    // Çàµ¿ getter ¸Ş¼­µå
+    // í–‰ë™ getter ë©”ì„œë“œ
     int gAttack1();
     int gAttack2();
     int gDefense();
-    int gAvoid(); // È¸ÇÇ È®·ü ¹İÈ¯
-    int gSpeed(); // ¼Óµµ ¹İÈ¯
+    int gAvoid(); // íšŒí”¼ í™•ë¥  ë°˜í™˜
+    int gSpeed(); // ì†ë„ ë°˜í™˜
     int gHeal();
 
-    // »óÅÂ ¼³Á¤ ¹× Á¶È¸
+    // ìƒíƒœ ì„¤ì • ë° ì¡°íšŒ
     void setState(int s);
-    int myState();  // ÇöÀç »óÅÂ ¹İÈ¯
-    void setSpeed(int spd); // ¼Óµµ ¼³Á¤
+    int myState();  // í˜„ì¬ ìƒíƒœ ë°˜í™˜
+    void setSpeed(int spd); // ì†ë„ ì„¤ì •
 };
 
 #endif
