@@ -6,117 +6,117 @@
 
 using namespace std;
 
-// ÇÃ·¹ÀÌ¾î ÅÏ Ã³¸® ÇÔ¼ö
+// í”Œë ˆì´ì–´ í„´ ì²˜ë¦¬ í•¨ìˆ˜
 void playerTurn(Player& player, Mob& mob) {
     int choice;
-    cout << "\nPlayerÀÇ Çàµ¿À» ¼±ÅÃÇÏ¼¼¿ä:\n";
-    cout << "1. °ø°İ\n";
-    cout << "2. ¹æ¾î\n";
-    cout << "3. È¸ÇÇ\n";
-    cout << "4. È¸º¹\n";
-    cout << "¼±ÅÃ: ";
+    cout << "\nPlayerì˜ í–‰ë™ì„ ì„ íƒí•˜ì„¸ìš”:\n";
+    cout << "1. ê³µê²©\n";
+    cout << "2. ë°©ì–´\n";
+    cout << "3. íšŒí”¼\n";
+    cout << "4. íšŒë³µ\n";
+    cout << "ì„ íƒ: ";
     cin >> choice;
 
-    // ÇÃ·¹ÀÌ¾îÀÇ Çàµ¿ Ã³¸®
+    // í”Œë ˆì´ì–´ì˜ í–‰ë™ ì²˜ë¦¬
     switch (choice) {
-    case 1:  // °ø°İ
-        player.act1();  // °ø°İ ½ÇÇà
-        cout << "ÇÃ·¹ÀÌ¾î°¡ °ø°İÀ» ½ÃµµÇÕ´Ï´Ù!\n";
-        mob.hp -= player.gAttack1();  // ÇÃ·¹ÀÌ¾î°¡ °ø°İ
-        cout << "¸ó½ºÅÍ°¡ " << player.gAttack1() << " µ¥¹ÌÁö¸¦ ÀÔ¾ú½À´Ï´Ù. ¸ó½ºÅÍ Ã¼·Â: " << mob.hp << "\n";
+    case 1:  // ê³µê²©
+        player.act1();  // ê³µê²© ì‹¤í–‰
+        cout << "í”Œë ˆì´ì–´ê°€ ê³µê²©ì„ ì‹œë„í•©ë‹ˆë‹¤!\n";
+        mob.hp -= player.gAttack1();  // í”Œë ˆì´ì–´ê°€ ê³µê²©
+        cout << "ëª¬ìŠ¤í„°ê°€ " << player.gAttack1() << " ë°ë¯¸ì§€ë¥¼ ì…ì—ˆìŠµë‹ˆë‹¤. ëª¬ìŠ¤í„° ì²´ë ¥: " << mob.hp << "\n";
         break;
-    case 2:  // ¹æ¾î
-        player.setState(3);  // ¹æ¾î »óÅÂ ¼³Á¤
-        cout << "ÇÃ·¹ÀÌ¾î°¡ ¹æ¾î¸¦ ½ÃµµÇÕ´Ï´Ù!\n";
+    case 2:  // ë°©ì–´
+        player.setState(3);  // ë°©ì–´ ìƒíƒœ ì„¤ì •
+        cout << "í”Œë ˆì´ì–´ê°€ ë°©ì–´ë¥¼ ì‹œë„í•©ë‹ˆë‹¤!\n";
         break;
-    case 3: {  // È¸ÇÇ
-        player.setState(4);  // È¸ÇÇ »óÅÂ ¼³Á¤
-        cout << "ÇÃ·¹ÀÌ¾î°¡ È¸ÇÇ¸¦ ½ÃµµÇÕ´Ï´Ù!\n";
-        int actualEvadeChance = (rand() % 31) + 20;  // 20%~50% È¸ÇÇ È®·ü
+    case 3: {  // íšŒí”¼
+        player.setState(4);  // íšŒí”¼ ìƒíƒœ ì„¤ì •
+        cout << "í”Œë ˆì´ì–´ê°€ íšŒí”¼ë¥¼ ì‹œë„í•©ë‹ˆë‹¤!\n";
+        int actualEvadeChance = (rand() % 31) + 20;  // 20%~50% íšŒí”¼ í™•ë¥ 
         int evadeChance = rand() % 100 + 1;
         if (evadeChance <= actualEvadeChance) {
-            cout << "ÇÃ·¹ÀÌ¾î°¡ È¸ÇÇ¿¡ ¼º°øÇß½À´Ï´Ù! È¸ÇÇ È®·ü: " << actualEvadeChance << "%\n";
+            cout << "í”Œë ˆì´ì–´ê°€ íšŒí”¼ì— ì„±ê³µí–ˆìŠµë‹ˆë‹¤! íšŒí”¼ í™•ë¥ : " << actualEvadeChance << "%\n";
         }
         else {
-            cout << "ÇÃ·¹ÀÌ¾î°¡ È¸ÇÇ¿¡ ½ÇÆĞÇß½À´Ï´Ù.\n";
+            cout << "í”Œë ˆì´ì–´ê°€ íšŒí”¼ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.\n";
         }
         break;
     }
-    case 4:  // È¸º¹
-        player.setState(5);  // È¸º¹ »óÅÂ ¼³Á¤
-        player.hp += player.gHeal();  // ÇÃ·¹ÀÌ¾î Ã¼·Â È¸º¹
+    case 4:  // íšŒë³µ
+        player.setState(5);  // íšŒë³µ ìƒíƒœ ì„¤ì •
+        player.hp += player.gHeal();  // í”Œë ˆì´ì–´ ì²´ë ¥ íšŒë³µ
         if (player.hp > player.maxhp) player.hp = player.maxhp;
-        cout << "ÇÃ·¹ÀÌ¾îÀÇ Ã¼·ÂÀÌ " << player.hp << "·Î È¸º¹µÇ¾ú½À´Ï´Ù.\n";
+        cout << "í”Œë ˆì´ì–´ì˜ ì²´ë ¥ì´ " << player.hp << "ë¡œ íšŒë³µë˜ì—ˆìŠµë‹ˆë‹¤.\n";
         break;
     default:
-        cout << "Àß¸øµÈ ¼±ÅÃÀÔ´Ï´Ù.\n";
+        cout << "ì˜ëª»ëœ ì„ íƒì…ë‹ˆë‹¤.\n";
         break;
     }
 }
 
-// ¸ó½ºÅÍ ÅÏ Ã³¸® ÇÔ¼ö
+// ëª¬ìŠ¤í„° í„´ ì²˜ë¦¬ í•¨ìˆ˜
 void monsterTurn(Player& player, Mob& mob) {
-    int action = rand() % 2;  // ¸ó½ºÅÍ°¡ °ø°İÇÒÁö ¹æ¾îÇÒÁö °áÁ¤(ÀÓ½Ã·Î ÀÏ´Ü ·£´ıÇÔ¼ö Ã³¸®ÇÏ¿´À½)
+    int action = rand() % 2;  // ëª¬ìŠ¤í„°ê°€ ê³µê²©í• ì§€ ë°©ì–´í• ì§€ ê²°ì •(ì„ì‹œë¡œ ì¼ë‹¨ ëœë¤í•¨ìˆ˜ ì²˜ë¦¬í•˜ì˜€ìŒ)
 
     if (action == 0) {
-        cout << "¸ó½ºÅÍ°¡ °ø°İÀ» ½ÃµµÇÕ´Ï´Ù!\n";
-        if (player.myState() == 4) {  // ÇÃ·¹ÀÌ¾î°¡ È¸ÇÇ »óÅÂ¸é È¸ÇÇ È®ÀÎ
+        cout << "ëª¬ìŠ¤í„°ê°€ ê³µê²©ì„ ì‹œë„í•©ë‹ˆë‹¤!\n";
+        if (player.myState() == 4) {  // í”Œë ˆì´ì–´ê°€ íšŒí”¼ ìƒíƒœë©´ íšŒí”¼ í™•ì¸
             int evadeChance = rand() % 100 + 1;
             if (evadeChance <= player.gAvoid()) {
-                cout << "ÇÃ·¹ÀÌ¾î°¡ ¸ó½ºÅÍÀÇ °ø°İÀ» È¸ÇÇÇß½À´Ï´Ù!\n";
-                return;  // È¸ÇÇ ¼º°ø, ¸ó½ºÅÍ °ø°İ ¹«È¿
+                cout << "í”Œë ˆì´ì–´ê°€ ëª¬ìŠ¤í„°ì˜ ê³µê²©ì„ íšŒí”¼í–ˆìŠµë‹ˆë‹¤!\n";
+                return;  // íšŒí”¼ ì„±ê³µ, ëª¬ìŠ¤í„° ê³µê²© ë¬´íš¨
             }
         }
         player.hp -= mob.gAttack1();
-        cout << "ÇÃ·¹ÀÌ¾î°¡ " << mob.gAttack1() << " µ¥¹ÌÁö¸¦ ÀÔ¾ú½À´Ï´Ù. ÇÃ·¹ÀÌ¾î Ã¼·Â: " << player.hp << "\n";
+        cout << "í”Œë ˆì´ì–´ê°€ " << mob.gAttack1() << " ë°ë¯¸ì§€ë¥¼ ì…ì—ˆìŠµë‹ˆë‹¤. í”Œë ˆì´ì–´ ì²´ë ¥: " << player.hp << "\n";
     }
     else {
-        cout << "¸ó½ºÅÍ°¡ ¹æ¾î¸¦ ½ÃµµÇÕ´Ï´Ù!\n";
+        cout << "ëª¬ìŠ¤í„°ê°€ ë°©ì–´ë¥¼ ì‹œë„í•©ë‹ˆë‹¤!\n";
         mob.turn2(player);
     }
 }
 
-// ¼Óµµ ±â¹İ ÅÏ ¼ø¼­ °áÁ¤ ÇÔ¼ö
+// ì†ë„ ê¸°ë°˜ í„´ ìˆœì„œ ê²°ì • í•¨ìˆ˜
 void determineTurnOrder(Player& player, Mob& mob) {
-    player.setSpeed((rand() % 31) + 20);  // ¼Óµµ¸¦ 20~50 ¹üÀ§·Î ¼³Á¤
-    mob.setSpeed((rand() % 31) + 20);     // ¼Óµµ¸¦ 20~50 ¹üÀ§·Î ¼³Á¤
+    player.setSpeed((rand() % 31) + 20);  // ì†ë„ë¥¼ 20~50 ë²”ìœ„ë¡œ ì„¤ì •
+    mob.setSpeed((rand() % 31) + 20);     // ì†ë„ë¥¼ 20~50 ë²”ìœ„ë¡œ ì„¤ì •
 
-    cout << "ÇÃ·¹ÀÌ¾î ¼Óµµ: " << player.gSpeed() << " | ¸ó½ºÅÍ ¼Óµµ: " << mob.gSpeed() << "\n";
+    cout << "í”Œë ˆì´ì–´ ì†ë„: " << player.gSpeed() << " | ëª¬ìŠ¤í„° ì†ë„: " << mob.gSpeed() << "\n";
     if (player.gSpeed() >= mob.gSpeed()) {
-        cout << "ÇÃ·¹ÀÌ¾î°¡ ¸ÕÀú Çàµ¿ÇÕ´Ï´Ù!\n";
-        playerTurn(player, mob);  // ÇÃ·¹ÀÌ¾î ÅÏ
+        cout << "í”Œë ˆì´ì–´ê°€ ë¨¼ì € í–‰ë™í•©ë‹ˆë‹¤!\n";
+        playerTurn(player, mob);  // í”Œë ˆì´ì–´ í„´
         if (mob.hp > 0) {
-            monsterTurn(player, mob);  // ¸ó½ºÅÍ ÅÏ
+            monsterTurn(player, mob);  // ëª¬ìŠ¤í„° í„´
         }
     }
     else {
-        cout << "¸ó½ºÅÍ°¡ ¸ÕÀú Çàµ¿ÇÕ´Ï´Ù!\n";
-        monsterTurn(player, mob);  // ¸ó½ºÅÍ ÅÏ
+        cout << "ëª¬ìŠ¤í„°ê°€ ë¨¼ì € í–‰ë™í•©ë‹ˆë‹¤!\n";
+        monsterTurn(player, mob);  // ëª¬ìŠ¤í„° í„´
         if (player.hp > 0) {
-            playerTurn(player, mob);  // ÇÃ·¹ÀÌ¾î ÅÏ
+            playerTurn(player, mob);  // í”Œë ˆì´ì–´ í„´
         }
     }
 }
 
 int main() {
-    srand(static_cast<unsigned int>(time(0)));  // ·£´ı ½Ãµå ÃÊ±âÈ­
+    srand(static_cast<unsigned int>(time(0)));  // ëœë¤ ì‹œë“œ ì´ˆê¸°í™”
 
-    // Player °´Ã¼ ¹× Mob °´Ã¼ »ı¼º
+    // Player ê°ì²´ ë° Mob ê°ì²´ ìƒì„±
     Player player(30, 40, 100, 15, 20, 25, 25);
     Mob mob(25, 35, 120, 10, 15, 20, 15);
 
-    // ÀüÅõ ½ÃÀÛ
+    // ì „íˆ¬ ì‹œì‘
     while (player.hp > 0 && mob.hp > 0) {
-        determineTurnOrder(player, mob);  // ¼Óµµ¿¡ µû¶ó ÅÏ ¼ø¼­ °áÁ¤
+        determineTurnOrder(player, mob);  // ì†ë„ì— ë”°ë¼ í„´ ìˆœì„œ ê²°ì •
 
-        // ½Â¸® Á¶°Ç Ã¼Å©
+        // ìŠ¹ë¦¬ ì¡°ê±´ ì²´í¬
         if (mob.hp <= 0) {
-            cout << "ÇÃ·¹ÀÌ¾î°¡ ½Â¸®Çß½À´Ï´Ù!\n";
+            cout << "í”Œë ˆì´ì–´ê°€ ìŠ¹ë¦¬í–ˆìŠµë‹ˆë‹¤!\n";
             break;
         }
 
         if (player.hp <= 0) {
-            cout << "ÇÃ·¹ÀÌ¾î°¡ ÆĞ¹èÇß½À´Ï´Ù...\n";
+            cout << "í”Œë ˆì´ì–´ê°€ íŒ¨ë°°í–ˆìŠµë‹ˆë‹¤...\n";
             break;
         }
     }
