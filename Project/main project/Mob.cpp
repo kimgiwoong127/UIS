@@ -1,4 +1,4 @@
-#include "Mob.h"
+﻿#include "Mob.h"
 
 Mob::Mob(int a, int b, int h, int av, int d, int he,int spd) {
 	mob = State(a, b, h, av, d, he,spd);
@@ -14,8 +14,8 @@ void Mob::turn1(Player& player) {
 
 	for (int i = 0; i < 3; i++) {
 		Bayes[i] = ((((float)attack1W[i] / (attack1W[i] + attack1L[i])) * ((float)attack1W[i] / (attack1W[i] + attack2W[i])))
-			/ ((float)(attack1W[i] + attack2W[i]) / (attack1W[i] + attack2W[i] + attack1L[0] + attack2L[0]))) * 100;
-		cout << "확률 " << Bayes[i] << endl;
+			/ ((float)(attack1W[i] + attack2W[i]) / (attack1W[i] + attack2W[i] + attack1L[i] + attack2L[i]))) * 100;
+		cout << Bayes[i] << endl;
 	}
 
 	switch (player.PlayerState()) {
@@ -42,18 +42,18 @@ void Mob::turn1(Player& player) {
 
 		if (exhp - player.gHP() >= 10) {
 			if (a) {
-				attack1L[0]++;
+				this->attack1L[0]++;
 			}
 			else {
-				attack2L[0]++;
+				this->attack2L[0]++;
 			}
 		}
 		else {
 			if (a) {
-				attack1W[0]++;
+				this->attack1W[0]++;
 			}
 			else {
-				attack2W[0]++;
+				this->attack2W[0]++;
 			}
 		}
 		break;
@@ -80,18 +80,18 @@ void Mob::turn1(Player& player) {
 
 		if (exhp - player.gHP() >= 10) {
 			if (a) {
-				attack1L[1]++;
+				this->attack1L[1]++;
 			}
 			else {
-				attack2L[1]++;
+				this->attack2L[1]++;
 			}
 		}
 		else {
 			if (a) {
-				attack1W[1]++;
+				this->attack1W[1]++;
 			}
 			else {
-				attack2W[1]++;
+				this->attack2W[1]++;
 			}
 		}
 
@@ -125,18 +125,18 @@ void Mob::turn1(Player& player) {
 
 		if (exhp - player.gHP() >= 10) {
 			if (a) {
-				attack1L[2]++;
+				this->attack1L[2]++;
 			}
 			else {
-				attack2L[2]++;
+				this->attack2L[2]++;
 			}
 		}
 		else {
 			if (a) {
-				attack1W[2]++;
+				this->attack1W[2]++;
 			}
 			else {
-				attack2W[2]++;
+				this->attack2W[2]++;
 			}
 		}
 		break;
@@ -161,7 +161,6 @@ void Mob::turn2(Player& player) {
 			/ ((float)(DefW[i] + AvoW[i] + HealW[i]) / (DefW[i] + AvoW[i] + HealW[i] + DefL[i] + AvoL[i] + HealL[i]))) * 100;
 		Bayes2[i] = ((((float)AvoW[i] / (AvoW[i] + AvoL[i])) * ((float)AvoW[i] / (DefW[i] + AvoW[i] + HealW[i])))
 			/ ((float)(DefW[i] + AvoW[i] + HealW[i]) / (DefW[i] + AvoW[i] + HealW[i] + DefL[i] + AvoL[i] + HealL[i]))) * 100;
-		cout << "확률 "<<Bayes1[i] << " " << Bayes2[i] << endl;
 	}
 
 	switch (player.PlayerState()) {
@@ -202,24 +201,24 @@ void Mob::turn2(Player& player) {
 
 		if (exhp - mob.hp >= 10) {
 			if (a) {
-				DefW[0]++;
+				this->DefW[0]++;
 			}
 			else if (b) {
-				AvoW[0]++;
+				this->AvoW[0]++;
 			}
 			else {
-				HealW[0]++;
+				this->HealW[0]++;
 			}
 		}
 		else {
 			if (a) {
-				DefL[0]++;
+				this->DefL[0]++;
 			}
 			else if (b) {
-				AvoL[0]++;
+				this->AvoL[0]++;
 			}
 			else {
-				HealL[0]++;
+				this->HealL[0]++;
 			}
 		}
 		break;
@@ -259,28 +258,274 @@ void Mob::turn2(Player& player) {
 
 		if (exhp - mob.hp >= 10) {
 			if (a) {
-				DefW[1]++;
+				this->DefW[1]++;
 			}
 			else if (b) {
-				AvoW[1]++;
+				this->AvoW[1]++;
 			}
 			else {
-				HealW[1]++;
+				this->HealW[1]++;
 			}
 		}
 		else {
 			if (a) {
-				DefL[1]++;
+				this->DefL[1]++;
 			}
 			else if (b) {
-				AvoL[1]++;
+				this->AvoL[1]++;
 			}
 			else {
-				HealL[1]++;
+				this->HealL[1]++;
 			}
 		}
 		break;
 	default:
 		break;
 	}
+}
+
+void Mob::ShowBayesP1(Player& player) {
+	player.act2();
+	srand(static_cast<unsigned int>(time(0)));
+	int exhp = player.gHP();
+	int choose = rand() % 100;
+	int Bayes[3] = { 0,0,0 };
+	bool a = false;
+
+	for (int i = 0; i < 3; i++) {
+		Bayes[i] = ((((float)attack1W[i] / (attack1W[i] + attack1L[i])) * ((float)attack1W[i] / (attack1W[i] + attack2W[i])))
+			/ ((float)(attack1W[i] + attack2W[i]) / (attack1W[i] + attack2W[i] + attack1L[i] + attack2L[i]))) * 100;
+	}
+
+	switch (player.PlayerState()) {
+	case 3:
+		if (choose < Bayes[0]) {//방어
+			if (player.gDefense() < mob.gAttack1()) {
+				player.sHP(player.gHP() - (mob.gAttack1() - player.gDefense()));
+			}
+			a = true;
+		}
+		else {
+			if (player.gDefense() < mob.gAttack2()) {
+				player.sHP(player.gHP() - (mob.gAttack2() - player.gDefense()));
+			}
+		}
+
+		if (exhp - player.gHP() >= 10) {
+			if (a) {
+				this->attack1L[0]++;
+			}
+			else {
+				this->attack2L[0]++;
+			}
+		}
+		else {
+			if (a) {
+				this->attack1W[0]++;
+			}
+			else {
+				this->attack2W[0]++;
+			}
+		}
+		break;
+	case 4:
+		if (choose < Bayes[1]) {//회피
+			if ((rand() % 100) >= player.gAvoid()) {
+				player.sHP(player.gHP() - (mob.gAttack1()));
+			}
+			a = true;
+		}
+		else {
+			if ((rand() % 100) >= player.gAvoid()) {
+				player.sHP(player.gHP() - (mob.gAttack2()));
+			}
+		}
+
+		if (exhp - player.gHP() >= 10) {
+			if (a) {
+				this->attack1L[1]++;
+			}
+			else {
+				this->attack2L[1]++;
+			}
+		}
+		else {
+			if (a) {
+				this->attack1W[1]++;
+			}
+			else {
+				this->attack2W[1]++;
+			}
+		}
+
+		break;
+	case 5:
+		if (choose <= Bayes[2]) {//회복
+			if (player.gHP() + player.gHeal() < player.max()) {
+				player.sHP(player.gHP() + player.gHeal());
+			}
+			else {
+				player.sHP(player.max());
+			}
+			a = true;
+			player.sHP(player.gHP() - (mob.gAttack1()));
+		}
+		else {
+			if (player.gHP() + player.gHeal() < player.max()) {
+				player.sHP(player.gHP() + player.gHeal());
+			}
+			else {
+				player.sHP(player.max());
+			}
+			player.sHP(player.gHP() - (mob.gAttack2()));
+		}
+
+		if (exhp - player.gHP() >= 10) {
+			if (a) {
+				this->attack1L[2]++;
+			}
+			else {
+				this->attack2L[2]++;
+			}
+		}
+		else {
+			if (a) {
+				this->attack1W[2]++;
+			}
+			else {
+				this->attack2W[2]++;
+			}
+		}
+		break;
+	default:
+		break;
+	}
+	cout << endl << "방어 시 베이즈 정리에 따른 확률" << endl
+		<< "강공격 성공률: " << Bayes[0] << " 약공격 성공률: " << 100 - Bayes[0] << endl << endl;
+	cout << "회피 시 베이즈 정리에 따른 확률" << endl
+		<< "강공격 성공률: " << Bayes[1] << " 약공격 성공률: " << 100 - Bayes[1] << endl << endl;
+	cout << "회복 시 베이즈 정리에 따른 확률" << endl
+		<< "강공격 성공률: " << Bayes[2] << " 약공격 성공률: " << 100 - Bayes[2] << endl << endl;
+}
+
+void Mob::ShowBayesP2(Player& player) {
+	player.act1();
+	int exhp = gHP();
+	srand(static_cast<unsigned int>(time(0)));
+	int choose = rand() % 100;
+	int Bayes1[2] = { 0,0 };
+	int Bayes2[2] = { 0,0 };
+	bool a = false;
+	bool b = false;
+	//1은 방어 성공률 2는 회피 성공률 식은 기존과 동일
+
+	for (int i = 0; i < 2; i++) {
+		Bayes1[i] = ((((float)DefW[i] / (DefW[i] + DefL[i])) * ((float)DefW[i] / (DefW[i] + AvoW[i] + HealW[i])))
+			/ ((float)(DefW[i] + AvoW[i] + HealW[i]) / (DefW[i] + AvoW[i] + HealW[i] + DefL[i] + AvoL[i] + HealL[i]))) * 100;
+		Bayes2[i] = ((((float)AvoW[i] / (AvoW[i] + AvoL[i])) * ((float)AvoW[i] / (DefW[i] + AvoW[i] + HealW[i])))
+			/ ((float)(DefW[i] + AvoW[i] + HealW[i]) / (DefW[i] + AvoW[i] + HealW[i] + DefL[i] + AvoL[i] + HealL[i]))) * 100;
+	}
+
+	switch (player.PlayerState()) {
+	case 1:
+		if (choose <= Bayes1[0]) {
+			if (gDefense() < player.gAttack1()) {
+				sHP(gHP() - (player.gAttack1() - gDefense()));
+			}
+			a = true;
+		}
+		else if (choose <= Bayes1[0] + Bayes2[0] && choose > Bayes1[0]) {
+			if ((rand() % 100) >= gAvoid()) {
+				sHP(gHP() - player.gAttack1());
+			}
+			b = true;
+		}
+		else {
+
+			if (gHP() + gHeal() < max()) {
+				sHP(gHP() + gHeal());
+			}
+			else {
+				sHP(max());
+			}
+			sHP(gHP() - player.gAttack1());
+		}
+
+		if (exhp - mob.hp >= 10) {
+			if (a) {
+				this->DefW[0]++;
+			}
+			else if (b) {
+				this->AvoW[0]++;
+			}
+			else {
+				this->HealW[0]++;
+			}
+		}
+		else {
+			if (a) {
+				this->DefL[0]++;
+			}
+			else if (b) {
+				this->AvoL[0]++;
+			}
+			else {
+				this->HealL[0]++;
+			}
+		}
+		break;
+	case 2:
+		if (choose <= Bayes1[1]) {
+			if (gDefense() < player.gAttack2()) {
+				sHP(gHP() - (player.gAttack2() - gDefense()));
+			}
+			a = true;
+		}
+		else if (choose <= Bayes1[1] + Bayes2[1] && choose > Bayes1[1]) {
+			if ((rand() % 100) >= gAvoid()) {
+				sHP(gHP() - player.gAttack2());
+			}
+			b = true;
+		}
+		else {
+			if ((gHP() + gHeal()) < max()) {
+				sHP(gHP() + gHeal());
+			}
+			else {
+				sHP(max());
+			}
+			sHP(gHP() - player.gAttack2());
+		}
+
+		if (exhp - mob.hp >= 10) {
+			if (a) {
+				this->DefW[1]++;
+			}
+			else if (b) {
+				this->AvoW[1]++;
+			}
+			else {
+				this->HealW[1]++;
+			}
+		}
+		else {
+			if (a) {
+				this->DefL[1]++;
+			}
+			else if (b) {
+				this->AvoL[1]++;
+			}
+			else {
+				this->HealL[1]++;
+			}
+		}
+		break;
+	default:
+		break;
+	}
+
+	cout << endl << "강공격 시 베이즈 정리에 따른 확률" << endl
+		<< "방어 성공률: " << Bayes1[0] << " 회피 성공률: " << Bayes2[0] << " 회복 성공률: " << 100 - Bayes1[0] - Bayes2[0] << endl<<endl;
+	cout << "약공격 시 베이즈 정리에 따른 확률" << endl 
+		<< "방어 성공률: " << Bayes1[1] << " 회피 성공률: " << Bayes2[1] << " 회복 성공률: " << 100 - Bayes1[1] - Bayes2[1] << endl << endl;
 }
