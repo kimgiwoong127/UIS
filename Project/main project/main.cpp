@@ -19,24 +19,59 @@ void determineTurnOrder(Player& player, Mob& mob) {
     cout << "플레이어 속도: " << player.gSpeed() << " | 몬스터 속도: " << mob.gSpeed() << endl;
     if (player.gSpeed() >= mob.gSpeed()) {
         cout << "플레이어가 먼저 행동합니다!" << endl;
+        cout << "플레이어 체력: " << player.gHP() << " 적의 체력: " << mob.gHP() << endl << endl;;
+
         monsterTurn(player, mob,2);
         mob.turn2(player);
-        cout << "플레이어 체력: " << player.gHP() << " 적의 체력: " << mob.gHP() << endl << endl;;
+        cout << endl << "플레이어 체력: " << player.gHP() << " 적의 체력: " << mob.gHP() << endl << endl;;
         if (mob.gHP() > 0) {
             monsterTurn(player, mob,1);  // 몬스터 턴
             mob.turn1(player);
-            cout << "플레이어 체력: " << player.gHP() << " 적의 체력: " << mob.gHP() << endl << endl;;
+            cout << endl << "플레이어 체력: " << player.gHP() << " 적의 체력: " << mob.gHP() << endl << endl;;
         }
     }
     else {
         cout << "몬스터가 먼저 행동합니다!" << endl;
+        cout << "플레이어 체력: " << player.gHP() << " 적의 체력: " << mob.gHP() << endl << endl;;
         monsterTurn(player, mob,1);
         mob.turn1(player);
-        cout << "플레이어 체력: " << player.gHP() << " 적의 체력: " << mob.gHP() << endl << endl;;
+        cout << endl << "플레이어 체력: " << player.gHP() << " 적의 체력: " << mob.gHP() << endl << endl;;
         if (player.gHP() > 0) {
             monsterTurn(player, mob,2);  // 몬스터 턴
             mob.turn2(player);
-            cout << "플레이어 체력: " << player.gHP() << " 적의 체력: " << mob.gHP() << endl << endl;;
+            cout << endl << "플레이어 체력: " << player.gHP() << " 적의 체력: " << mob.gHP() << endl << endl;;
+        }
+    }
+}
+
+void determineTurnOrderB(Player& player, Mob& mob) {
+    player.setSpeed((rand() % 31) + 20);
+    mob.setSpeed((rand() % 31) + 20);
+
+    cout << "플레이어 속도: " << player.gSpeed() << " | 몬스터 속도: " << mob.gSpeed() << endl;
+    if (player.gSpeed() >= mob.gSpeed()) {
+        cout << "플레이어가 먼저 행동합니다!" << endl;
+        cout << "플레이어 체력: " << player.gHP() << " 적의 체력: " << mob.gHP() << endl << endl;;
+
+        monsterTurn(player, mob, 2);
+        mob.ShowBayesP2(player);
+        cout << endl << "플레이어 체력: " << player.gHP() << " 적의 체력: " << mob.gHP() << endl << endl;;
+        if (mob.gHP() > 0) {
+            monsterTurn(player, mob, 1);  // 몬스터 턴
+            mob.ShowBayesP1(player);
+            cout << endl << "플레이어 체력: " << player.gHP() << " 적의 체력: " << mob.gHP() << endl << endl;;
+        }
+    }
+    else {
+        cout << "몬스터가 먼저 행동합니다!" << endl;
+        cout << "플레이어 체력: " << player.gHP() << " 적의 체력: " << mob.gHP() << endl << endl;;
+        monsterTurn(player, mob, 1);
+        mob.ShowBayesP1(player);
+        cout << endl << "플레이어 체력: " << player.gHP() << " 적의 체력: " << mob.gHP() << endl << endl;;
+        if (player.gHP() > 0) {
+            monsterTurn(player, mob, 2);  // 몬스터 턴
+            mob.ShowBayesP2(player);
+            cout << endl << "플레이어 체력: " << player.gHP() << " 적의 체력: " << mob.gHP() << endl << endl;;
         }
     }
 }
@@ -51,8 +86,9 @@ int main() {
     // 전투 시작
     while (true) {
         cout <<"----------------------"<< i << "번째 턴------------------------" << endl<<endl;
-        determineTurnOrder(player, mob);  // 속도에 따라 턴 순서 결정
-        // 승리 조건 체크
+        //determineTurnOrder(player, mob);  // 속도에 따라 턴 순서 결정
+        // determineTurnOrderB(player, mob); // 이건 베이즈 확률 출력
+
         if (mob.gHP() <= 0) {
             cout << "플레이어가 승리했습니다!" << endl;
             break;
