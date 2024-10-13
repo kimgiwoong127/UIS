@@ -1,4 +1,4 @@
-#ifndef MOB_H
+﻿#ifndef MOB_H
 #define MOB_H
 
 #include "Player.h"
@@ -36,5 +36,8 @@ public:
 	int gDefense() const { return mob.gDefense(); };
 	int gHeal() const { return mob.gHeal(); };
 	void sHP(int a) { mob.hp = a; };
+
+	void ShowBayesP1(Player& p);
+	void ShowBayesP2(Player& p);
 };
 #endif
