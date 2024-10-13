@@ -87,7 +87,7 @@ int main() {
     while (true) {
         cout <<"----------------------"<< i << "번째 턴------------------------" << endl<<endl;
         //determineTurnOrder(player, mob);  // 속도에 따라 턴 순서 결정
-        // determineTurnOrderB(player, mob); // 이건 베이즈 확률 출력
+        //determineTurnOrderB(player, mob); // 이건 베이즈 확률 출력
 
         if (mob.gHP() <= 0) {
             cout << "플레이어가 승리했습니다!" << endl;
