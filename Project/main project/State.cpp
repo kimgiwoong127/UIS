@@ -1,4 +1,4 @@
-#include "State.h"
+﻿#include "State.h"
 
 State::State(int a, int b, int h, int av, int d, int he, int spd) {  
 	attack1 = a; 
