@@ -1,4 +1,4 @@
-#include "Player.h"
+﻿#include "Player.h"
 
 Player::Player(int a, int b, int h, int av, int d, int he, int spd) {
 	player = State(a, b, h, av, d, he, spd);
