@@ -199,7 +199,7 @@ void Mob::turn2(Player& player) {
 			cout << "기회를 놓치지 않고 공격을 합니다. 적의 체력 -" << player.gAttack1() << endl;
 		}
 
-		if (exhp - mob.hp >= 10) {
+		if (exhp - mob.hp < 10) {
 			if (a) {
 				this->DefW[0]++;
 			}
@@ -256,7 +256,7 @@ void Mob::turn2(Player& player) {
 			cout << "기회를 놓치지 않고 공격을 합니다. 적의 체력 -" << player.gAttack2() << endl;
 		}
 
-		if (exhp - mob.hp >= 10) {
+		if (exhp - mob.hp < 10) {
 			if (a) {
 				this->DefW[1]++;
 			}
@@ -297,6 +297,13 @@ void Mob::ShowBayesP1(Player& player) {
 			/ ((float)(attack1W[i] + attack2W[i]) / (attack1W[i] + attack2W[i] + attack1L[i] + attack2L[i]))) * 100;
 	}
 
+	cout << endl << "방어 시 베이즈 정리에 따른 확률" << endl
+		<< "강공격 성공률: " << Bayes[0] << " 약공격 성공률: " << 100 - Bayes[0] << endl << endl;
+	cout << "회피 시 베이즈 정리에 따른 확률" << endl
+		<< "강공격 성공률: " << Bayes[1] << " 약공격 성공률: " << 100 - Bayes[1] << endl << endl;
+	cout << "회복 시 베이즈 정리에 따른 확률" << endl
+		<< "강공격 성공률: " << Bayes[2] << " 약공격 성공률: " << 100 - Bayes[2] << endl << endl;
+
 	switch (player.PlayerState()) {
 	case 3:
 		if (choose < Bayes[0]) {//방어
@@ -311,20 +318,24 @@ void Mob::ShowBayesP1(Player& player) {
 			}
 		}
 
-		if (exhp - player.gHP() >= 10) {
+		if (exhp - player.gHP() < 10) {
 			if (a) {
 				this->attack1L[0]++;
+				cout << "방어시 강공격 실패" << endl;
 			}
 			else {
 				this->attack2L[0]++;
+				cout << "방어시 약공격 실패" << endl;
 			}
 		}
 		else {
 			if (a) {
 				this->attack1W[0]++;
+				cout << "방어시 강공격 성공" << endl;
 			}
 			else {
 				this->attack2W[0]++;
+				cout << "방어시 약공격 성공" << endl;
 			}
 		}
 		break;
@@ -341,20 +352,24 @@ void Mob::ShowBayesP1(Player& player) {
 			}
 		}
 
-		if (exhp - player.gHP() >= 10) {
+		if (exhp - player.gHP() < 10) {
 			if (a) {
 				this->attack1L[1]++;
+				cout << "회피시 강공격 실패" << endl;
 			}
 			else {
 				this->attack2L[1]++;
+				cout << "회피시 약공격 실패" << endl;
 			}
 		}
 		else {
 			if (a) {
 				this->attack1W[1]++;
+				cout << "회피시 강공격 성공" << endl;
 			}
 			else {
 				this->attack2W[1]++;
+				cout << "회피시 약공격 성공" << endl;
 			}
 		}
 
@@ -380,32 +395,30 @@ void Mob::ShowBayesP1(Player& player) {
 			player.sHP(player.gHP() - (mob.gAttack2()));
 		}
 
-		if (exhp - player.gHP() >= 10) {
+		if (exhp - player.gHP() < 10) {
 			if (a) {
 				this->attack1L[2]++;
+				cout << "회복시 강공격 실패" << endl;
 			}
 			else {
 				this->attack2L[2]++;
+				cout << "회복시 약공격 실패" << endl;
 			}
 		}
 		else {
 			if (a) {
 				this->attack1W[2]++;
+				cout << "회복시 강공격 성공" << endl;
 			}
 			else {
 				this->attack2W[2]++;
+				cout << "회복시 약공격 성공" << endl;
 			}
 		}
 		break;
 	default:
 		break;
 	}
-	cout << endl << "방어 시 베이즈 정리에 따른 확률" << endl
-		<< "강공격 성공률: " << Bayes[0] << " 약공격 성공률: " << 100 - Bayes[0] << endl << endl;
-	cout << "회피 시 베이즈 정리에 따른 확률" << endl
-		<< "강공격 성공률: " << Bayes[1] << " 약공격 성공률: " << 100 - Bayes[1] << endl << endl;
-	cout << "회복 시 베이즈 정리에 따른 확률" << endl
-		<< "강공격 성공률: " << Bayes[2] << " 약공격 성공률: " << 100 - Bayes[2] << endl << endl;
 }
 
 void Mob::ShowBayesP2(Player& player) {
@@ -425,6 +438,11 @@ void Mob::ShowBayesP2(Player& player) {
 		Bayes2[i] = ((((float)AvoW[i] / (AvoW[i] + AvoL[i])) * ((float)AvoW[i] / (DefW[i] + AvoW[i] + HealW[i])))
 			/ ((float)(DefW[i] + AvoW[i] + HealW[i]) / (DefW[i] + AvoW[i] + HealW[i] + DefL[i] + AvoL[i] + HealL[i]))) * 100;
 	}
+
+	cout << endl << "강공격 시 베이즈 정리에 따른 확률" << endl
+		<< "방어 성공률: " << Bayes1[0] << " 회피 성공률: " << Bayes2[0] << " 회복 성공률: " << 100 - Bayes1[0] - Bayes2[0] << endl << endl;
+	cout << "약공격 시 베이즈 정리에 따른 확률" << endl
+		<< "방어 성공률: " << Bayes1[1] << " 회피 성공률: " << Bayes2[1] << " 회복 성공률: " << 100 - Bayes1[1] - Bayes2[1] << endl << endl;
 
 	switch (player.PlayerState()) {
 	case 1:
@@ -451,26 +469,32 @@ void Mob::ShowBayesP2(Player& player) {
 			sHP(gHP() - player.gAttack1());
 		}
 
-		if (exhp - mob.hp >= 10) {
+		if (exhp - mob.hp < 10) {
 			if (a) {
 				this->DefW[0]++;
+				cout << "강공격시 방어 성공"<<endl;
 			}
 			else if (b) {
 				this->AvoW[0]++;
+				cout << "강공격시 회피 성공" << endl;
 			}
 			else {
 				this->HealW[0]++;
+				cout << "강공격시 회복 성공" << endl;
 			}
 		}
 		else {
 			if (a) {
 				this->DefL[0]++;
+				cout << "강공격시 방어 실패" << endl;
 			}
 			else if (b) {
 				this->AvoL[0]++;
+				cout << "강공격시 회피 실패" << endl;
 			}
 			else {
 				this->HealL[0]++;
+				cout << "강공격시 회복 실패" << endl;
 			}
 		}
 		break;
@@ -497,35 +521,36 @@ void Mob::ShowBayesP2(Player& player) {
 			sHP(gHP() - player.gAttack2());
 		}
 
-		if (exhp - mob.hp >= 10) {
+		if (exhp - mob.hp < 10) {
 			if (a) {
 				this->DefW[1]++;
+				cout << "약공격시 방어 성공" << endl;
 			}
 			else if (b) {
 				this->AvoW[1]++;
+				cout << "약공격시 회피 성공" << endl;
 			}
 			else {
 				this->HealW[1]++;
+				cout << "약공격시 회복 성공" << endl;
 			}
 		}
 		else {
 			if (a) {
 				this->DefL[1]++;
+				cout << "약공격시 방어 실패" << endl;
 			}
 			else if (b) {
 				this->AvoL[1]++;
+				cout << "약공격시 회피 실패" << endl;
 			}
 			else {
 				this->HealL[1]++;
+				cout << "약공격시 회복 실패" << endl;
 			}
 		}
 		break;
 	default:
 		break;
 	}
-
-	cout << endl << "강공격 시 베이즈 정리에 따른 확률" << endl
-		<< "방어 성공률: " << Bayes1[0] << " 회피 성공률: " << Bayes2[0] << " 회복 성공률: " << 100 - Bayes1[0] - Bayes2[0] << endl<<endl;
-	cout << "약공격 시 베이즈 정리에 따른 확률" << endl 
-		<< "방어 성공률: " << Bayes1[1] << " 회피 성공률: " << Bayes2[1] << " 회복 성공률: " << 100 - Bayes1[1] - Bayes2[1] << endl << endl;
 }
