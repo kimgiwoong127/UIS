@@ -86,7 +86,7 @@ int main() {
     // 전투 시작
     while (true) {
         cout <<"----------------------"<< i << "번째 턴------------------------" << endl<<endl;
-        //determineTurnOrder(player, mob);  // 속도에 따라 턴 순서 결정
+        determineTurnOrder(player, mob);  // 속도에 따라 턴 순서 결정
         //determineTurnOrderB(player, mob); // 이건 베이즈 확률 출력
 
         if (mob.gHP() <= 0) {
