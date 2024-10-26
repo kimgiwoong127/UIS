@@ -6,7 +6,7 @@ Mob::Mob(int a, int b, int h, int av, int d, int he, int spd) {
 
 void Mob::act1() {
 	int pl = rand()%2;
-	switch (pl) {
+	switch (0) {
 	case 0:
 		StateChange(1);
 		cout << "적의 상태 : 약공격 " << endl;
@@ -22,7 +22,7 @@ void Mob::act1() {
 
 void Mob::act2() {
 	int pl = rand() % 3;
-	switch (pl) {
+	switch (0) {
 	case 0:
 		StateChange(3);
 		cout << "적의 상태 : 방어 " << endl;
