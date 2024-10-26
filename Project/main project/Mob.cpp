@@ -12,10 +12,16 @@ void Mob::turn1(Player& player) {
 	int Bayes[3] = {0,0,0};
 	bool a = false;
 
+	float Ea1[3] = { 0,0,0 };
+	float Ea2[3] = { 0,0,0 };
+
 	for (int i = 0; i < 3; i++) {
 		Bayes[i] = ((((float)attack1W[i] / (attack1W[i] + attack1L[i])) * ((float)attack1W[i] / (attack1W[i] + attack2W[i])))
 			/ ((float)(attack1W[i] + attack2W[i]) / (attack1W[i] + attack2W[i] + attack1L[i] + attack2L[i]))) * 100;
 		cout << Bayes[i] << endl;
+		Ea1[i] = (float)(attack1W[i] - attack1L[i]) / (float)(attack1W[i] + attack1L[i] + attack2W[i] + attack2L[i]);//효율값 추가 나중에 표로 정리함 해보죠
+		Ea2[i] = (float)(attack2W[i] - attack2L[i]) / (float)(attack1W[i] + attack1L[i] + attack2W[i] + attack2L[i]);
+		cout << endl << Ea1[i] << "  " << Ea2[i] << endl;
 	}
 
 	switch (player.PlayerState()) {
@@ -155,12 +161,19 @@ void Mob::turn2(Player& player) {
 	bool a = false;
 	bool b = false;
 	//1은 방어 성공률 2는 회피 성공률 식은 기존과 동일
+	float Eav[2] = { 0,0 };
+	float Eh[2] = { 0,0 };
+	float Ed[2] = { 0,0 };
 
 	for (int i = 0; i < 2; i++) {
 		Bayes1[i] = ((((float)DefW[i] / (DefW[i] + DefL[i])) * ((float)DefW[i] / (DefW[i] + AvoW[i] + HealW[i])))
 			/ ((float)(DefW[i] + AvoW[i] + HealW[i]) / (DefW[i] + AvoW[i] + HealW[i] + DefL[i] + AvoL[i] + HealL[i]))) * 100;
 		Bayes2[i] = ((((float)AvoW[i] / (AvoW[i] + AvoL[i])) * ((float)AvoW[i] / (DefW[i] + AvoW[i] + HealW[i])))
 			/ ((float)(DefW[i] + AvoW[i] + HealW[i]) / (DefW[i] + AvoW[i] + HealW[i] + DefL[i] + AvoL[i] + HealL[i]))) * 100;
+		Ed[i] = (float)(DefW[i] - DefL[i]) / (float)(DefW[i] + DefL[i] + AvoW[i] + AvoL[i] + HealW[i] + HealL[i]);
+		Eav[i] = (float)(AvoW[i] - AvoL[i]) / (float)(DefW[i] + DefL[i] + AvoW[i] + AvoL[i] + HealW[i] + HealL[i]);
+		Eh[i] = (float)(HealW[i] - HealL[i]) / (float)(DefW[i] + DefL[i] + AvoW[i] + AvoL[i] + HealW[i] + HealL[i]);
+		cout << endl << Ed[i] << "  " << Eav[i] <<"  " <<Eh[i]<< endl;
 	}
 
 	switch (player.PlayerState()) {
