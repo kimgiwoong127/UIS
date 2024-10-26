@@ -20,6 +20,7 @@ private:
 	int AvoL[2] = { 1,1 };
 	int HealW[2] = { 1,1 };
 	int HealL[2] = { 1,1 };
+
 	State mob;
 public:
 	Mob() {};
