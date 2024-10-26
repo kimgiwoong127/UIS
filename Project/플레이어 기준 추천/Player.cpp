@@ -23,37 +23,42 @@ int Player::Select(int turn) {
 }
 
 void Player::turn1(Mob& mob) {
-	mob.act2();
 	srand(static_cast<unsigned int>(time(0)));
+	mob.act2();
+	int a = rand() % 100;
 	int exhp = mob.gHP();
 	int Bayes[3] = {0,0,0};
+	int Bayes2[3] = { 0,0,0 };
 	string Recommand[3];
 
 	for (int i = 0; i < 3; i++) {
 		Bayes[i] = ((((float)attack1W[i] / (attack1W[i] + attack1L[i])) * ((float)attack1W[i] / (attack1W[i] + attack2W[i])))
 			/ ((float)(attack1W[i] + attack2W[i]) / (attack1W[i] + attack2W[i] + attack1L[i] + attack2L[i]))) * 100;
-		
-		if (Bayes[i] >=  100-Bayes[i]) {
+		Bayes2[i] = ((((float)attack2W[i] / (attack2W[i] + attack2L[i])) * ((float)attack2W[i] / (attack1W[i] + attack2W[i])))
+			/ ((float)(attack1W[i] + attack2W[i]) / (attack1W[i] + attack2W[i] + attack1L[i] + attack2L[i]))) * 100;
+		if (Bayes[i] >=  Bayes2[i]) {
 			Recommand[i] = "추천 선택 : 강공격 (성공 확률 : " + to_string(Bayes[i]) + "%)";
 		}
 		else {
-			Recommand[i] = "추천 선택 : 약공격 (성공 확률 : " + to_string(100-Bayes[i]) + "%)";
+			Recommand[i] = "추천 선택 : 약공격 (성공 확률 : " + to_string(Bayes2[i]) + "%)";
 		}
 	}
-
+	cout << endl << a << endl;
 	switch (mob.PlayerState()) {
 	case 3:
 		cout << Recommand[0] << endl;
 		switch (Select(1)) {
 		case 1:
-			if (mob.gDefense() < gAttack1()) {
-				mob.sHP(mob.gHP() - (gAttack1() - mob.gDefense()));
-				cout << "방어 중인 적을 공격합니다. " << gAttack1() - mob.gDefense() << "만큼의 피해를 입혔습니다." << endl;
+			if (a<= 25) {
+				if (mob.gDefense() < gAttack1()) {
+					mob.sHP(mob.gHP() - (gAttack1() - mob.gDefense()));
+					cout << "방어 중인 적을 공격합니다. " << gAttack1() - mob.gDefense() << "만큼의 피해를 입혔습니다." << endl;
+				}
+				else {
+					cout << "적이 공격을 완벽히 방어했습니다." << endl;
+				}
 			}
-			else {
-				cout << "적이 공격을 완벽히 방어했습니다." << endl;
-			}
-			
+
 			if (exhp - mob.gHP() < 10) {
 				this->attack1L[0]++;
 			}
@@ -62,8 +67,9 @@ void Player::turn1(Mob& mob) {
 			}
 			break;
 		case 2:
-			if (mob.gDefense() < gAttack1()) {
-				mob.sHP(mob.gHP() - (gAttack1() - mob.gDefense()));
+
+			if (mob.gDefense() < gAttack2()) {
+				mob.sHP(mob.gHP() - (gAttack2() - mob.gDefense()));
 				cout << "방어 중인 적을 공격합니다.  " << gAttack2() - mob.gDefense() << "만큼의 피해를 입혔습니다." << endl;
 			}
 			else {
@@ -85,14 +91,15 @@ void Player::turn1(Mob& mob) {
 		cout << Recommand[1] << endl;
 		switch (Select(1)) {
 		case 1:
-			if ((rand() % 100) >= mob.gAvoid()) {
-				mob.sHP(mob.gHP() - gAttack1());
-				cout << "적이 회피에 실패했습니다!" << gAttack1() << "만큼의 피해를 입혔습니다." << endl;
+			if (a<= 25) {
+				if ((rand() % 100) >= mob.gAvoid()) {
+					mob.sHP(mob.gHP() - gAttack1());
+					cout << "적이 회피에 실패했습니다!" << gAttack1() << "만큼의 피해를 입혔습니다." << endl;
+				}
+				else {
+					cout << "적이 회피에 성공했습니다... 피해를 입지 않습니다." << endl;
+				}
 			}
-			else {
-				cout << "적이 회피에 성공했습니다... 피해를 입지 않습니다." << endl;
-			}
-
 			if (exhp - mob.gHP() <10) {
 				this->attack1L[1]++;
 			}
@@ -132,9 +139,10 @@ void Player::turn1(Mob& mob) {
 				cout << "적이 회복을 사용합니다. 적의 체력 +" << mob.max() - mob.gHP() << endl;
 				mob.sHP(mob.max());
 			}
-			mob.sHP(mob.gHP() - (gAttack1()));
-			cout << "틈을 노려 적을 공격합니다. 적의 체력 -" << gAttack1() << endl;
-
+			if (a<= 25) {
+				mob.sHP(mob.gHP() - (gAttack1()));
+				cout << "틈을 노려 적을 공격합니다. 적의 체력 -" << gAttack1() << endl;
+			}
 			if (exhp - mob.gHP() < 10) {
 				this->attack1L[2]++;
 			}
