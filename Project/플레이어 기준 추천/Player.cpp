@@ -198,7 +198,7 @@ void Player::turn2(Mob& mob) {
 			Recommand[i] = "추천 선택 : 회피 (성공 확률 : " + to_string(Bayes2[i]) + "%)";
 		}
 		else {
-			Recommand[i] = "추천 선택 : 회복 (성공 확률 : " + to_string(99 - Bayes2[i] + Bayes1[i]) + "%)";
+			Recommand[i] = "추천 선택 : 회복 (성공 확률 : " + to_string(99 - Bayes2[i] - Bayes1[i]) + "%)";
 		}
 	}
 
